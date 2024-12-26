@@ -1,16 +1,11 @@
 import React from 'react';
 
-function Header() {
+function Header({ name, image }) {
   return (
-    <header>
-      <nav>
-        <ul>
-          <li><a href="#about">Sobre</a></li>
-          <li><a href="#skills">Habilidades</a></li>
-          <li><a href="#contact">Contato</a></li>
-        </ul>
-      </nav>
-    </header>
+    <div>
+      <img src={image} alt="Profile" />
+      <h1>{name}</h1>
+    </div>
   );
 }
 
