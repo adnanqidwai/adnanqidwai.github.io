@@ -1,0 +1,88 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: "Nanopass Compiler",
+    description: [
+      "Developed a nanopass compiler in racket, for racket. Makes numerous intermediate representations for compilation. The project was done in a team of two."
+    ],
+    technologies: ["Racket"],
+    // githubLink: "https://github.com/adnanqidwai/nanopass-compiler"
+  },
+  {
+    title: "Product Attribute Recognition",
+    description: [
+      "Done as a part of the Amazon ML Challenge: Team ranked 13 out of 75000+ participants all over India at all academic levels.",
+      "Developed a method to recognize entities like height, weight, volume etc. from a given image of a product, using only a small (230M) model."
+    ],
+    technologies: ["Huggingface", "Pytorch"],
+    // githubLink: "https://github.com/adnanqidwai/product-recognition",
+    // demoLink: "https://product-recognition-demo.example.com"
+  },
+  {
+    title: "Multi-tool Agent with RAG",
+    description: [
+      "Developed a full stack application that hosts multiple tools: VectorDB retrieval, RAG and a multi-tool LLM agent chatbot.",
+      "The agent can perform RAG, web searches, mathematical calculations, and output speech using Sarvam.ai's API."
+    ],
+    technologies: ["ChromaDB", "FastApi", "React"],
+    // githubLink: "https://github.com/adnanqidwai/multi-tool-agent",
+    // demoLink: "https://multi-tool-agent.example.com"
+  },
+  {
+    title: "Machine Learning Projects",
+    description: [
+      "Developed several projects using GMMs, LSTMs, CNNs, SVMs, and more.",
+      "Projects included visual age estimation, background seperation from videos, Image caption prediction, face recognition, etc."
+    ],
+    technologies: ["Pytorch", "Numpy", "Sklearn"],
+    // githubLink: "https://github.com/adnanqidwai/ml-projects"
+  },
+  {
+    title: "Transformer from Scratch",
+    description: [
+      "Coded the paper: Attention Is All You Need from the scratch in Pytorch.",
+      "Made Encoder-Decoder as well as Decoder-only transformers."
+    ],
+    technologies: ["Pytorch"],
+    // githubLink: "https://github.com/adnanqidwai/transformer-scratch"
+  }
+];
+---
+
+<Layout title="Projects - Adnan Qidwai">
+  <div class="projects-container">
+    <h1>Projects</h1>
+    <div class="projects-grid">
+      {projects.map(project => (
+        <ProjectCard
+          title={project.title}
+          description={project.description}
+          technologies={project.technologies}
+          githubLink={project.githubLink? project.githubLink: null}
+          demoLink={project.demoLink?project.demoLink: null}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .projects-container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 3rem;
+    text-shadow: var(--primary-glow);
+  }
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+</style>

@@ -1,0 +1,14 @@
+:root {
+  --background: #080510;
+  --surface: #13131f;
+  --text: #ffffff;
+  --text-secondary: #a0a0c0;
+  --picture-border: #d055c07c;
+  --primary: #ffffff;
+  --primary-glow: 0 0 5px #b485bd;
+  --secondary-glow: 0 0 8px #6d0e57;
+  --name: #d6ccf1;
+  --secondary: #1a1a2e;
+  --accent: #4169e1;
+  --accent-glow: 0 0 10px #4169e1;
+}

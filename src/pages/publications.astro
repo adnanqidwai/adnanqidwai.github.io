@@ -1,0 +1,66 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Publications - Adnan Qidwai">
+  <div class="publications-container">
+    <h1>Publications</h1>
+    
+    <div class="publication-card">
+      <div class="pub-header">
+        <span class="conference">EMNLP 2024</span>
+      </div>
+      <h2>Unraveling the Truth: Do VLMs really Understand Charts? A Deep Dive into Consistency and Robustness</h2>
+      <p class="authors">
+        <span class="author">Srija Mukhopadhyay*</span>,
+        <span class="author">Adnan Qidwai*</span>,
+        <span class="author">Aparna Garimella</span>,
+        <span class="author">Pritika Ramu</span>,
+        <span class="author">Vivek Gupta</span>,
+        <span class="author">Dan Roth</span>
+      </p>
+    </div>
+
+  </div>
+</Layout>
+
+<style>
+  .publications-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 3rem;
+    text-shadow: var(--primary-glow);
+  }
+  .publication-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--secondary);
+    transition: all 0.2s;
+  }
+  .publication-card:hover {
+    box-shadow: var(--primary-glow);
+  }
+  .conference {
+    color: var(--primary);
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  h2 {
+    margin: 1rem 0;
+    color: var(--text);
+    font-size: 1.5rem;
+  }
+  .authors {
+    color: var(--text-secondary);
+  }
+  .author {
+    margin-right: 0.5rem;
+  }
+</style>

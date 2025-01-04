@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const experiences = [
+  {
+    title: "Undergraduate Researcher",
+    duration: "Jan '24 - Present",
+    details: [
+      "Affiliated with University of Pennsylvania and Arizona State University",
+      "Exploring multimodal question answering with Prof. Vivek Gupta",
+      "Collaborated with Adobe Research; work published at EMNLP 2024"
+    ]
+  },
+  {
+    title: "Research Intern - IBM Research, On-site",
+    duration: "May '24 - Aug '24",
+    details: [
+      "Lead contributor for developing a novel method for code data profiling for a large set of code languages, using LLMs and Abstract Syntax Trees",
+      "Work submitted for review to a conference"
+    ]
+  },
+  {
+    title: "NLP Intern - Datazoic Inc.",
+    duration: "Jan '24 - Apr '24",
+    details: [
+      "Worked with the team to develop NLP applications integrating with local data on a very large set of documents",
+      "Developed a RAG-based chatbot and an NER application"
+    ]
+  }
+];
+
+const achievements = [
+  "Winner of Megathon 2024",
+  "Ranked 13 in all of India, out of 20000+ teams in the Amazon ML Challenge 2024",
+  "Invited to Google Intern Connect 2024",
+  "Ranked 650 out of 1.35 million in the JEE"
+];
+---
+
+<Layout title="Experience & Achievements - Your Name">
+  <div class="container">
+    <section class="experience">
+      <h1>Experience</h1>
+      <div class="experience-grid">
+        {experiences.map(exp => (
+          <div class="experience-card">
+            <div class="exp-header">
+              <h2>{exp.title}</h2>
+              <span class="duration">{exp.duration}</span>
+            </div>
+            <ul>
+              {exp.details.map(detail => (
+                <li>{detail}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="achievements">
+      <h1>Achievements</h1>
+      <div class="achievements-grid">
+        {achievements.map(achievement => (
+          <div class="achievement-card">
+            <span class="achievement-icon">▫️</span>
+            <p>{achievement}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  
+  h1 {
+    color: var(--primary);
+    text-align: center;
+    margin: 3rem 0;
+    text-shadow: var(--primary-glow);
+  }
+
+  .experience-card {
+    background: var(--surface);
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border: 1px solid var(--secondary);
+    transition: all 0.2s;
+  }
+
+  .experience-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--primary-glow);
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .duration {
+    color: var(--primary);
+    font-size: 0.9rem;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-left: 1.5rem;
+    color: var(--text-secondary);
+  }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .achievement-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--secondary);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .achievement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--primary-glow);
+  }
+
+  .achievement-icon {
+    font-size: 1.5rem;
+  }
+</style>

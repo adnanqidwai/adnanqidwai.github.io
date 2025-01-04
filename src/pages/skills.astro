@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SkillCategory from '../components/SkillCategory.astro';
+import SkillTag from '../components/SkillTag.astro';
+---
+
+<Layout title="Skills - Adnan Qidwai">
+  <div class="skills-container">
+    <h1>Skills & Expertise</h1>
+    
+    <SkillCategory title="Programming Languages">
+      <div class="skills-grid">
+        {['Python', 'C++', 'C', 'Java', 'x86 ASM', 'bash', 'Arduino', 'JavaScript', 'MySQL', 'HTML', 'CSS', 'Lisp', 'Racket', 'TypeScript', 'LaTeX'].map(skill => (
+          <SkillTag name={skill} />
+        ))}
+      </div>
+    </SkillCategory>
+
+    <SkillCategory title="Libraries & Frameworks">
+      <div class="skills-grid">
+        {['PyTorch', 'Numpy', 'Pandas', 'Langchain', 'Chroma', 'QGIS', 'Git', 'Streamlit', 'Tree-Sitter', 'SciKit-Learn', 'BOOST', 'FAISS', 'NodeJS', 'ExpressJS', 'MongoDB', 'React'].map(skill => (
+          <SkillTag name={skill} />
+        ))}
+      </div>
+    </SkillCategory>
+
+    <SkillCategory title="Technical Expertise">
+      <div class="skills-grid">
+        {['Deep Learning', 'NLP', 'Data Analytics', 'Information Security', 'UNIX', 'Queuing Theory', 'Data Mining', 'Blockchain', 'Software Design', 'Multiprocessing', 'Operating Systems', 'Machine Learning', 'Web Development'].map(skill => (
+          <SkillTag name={skill} />
+        ))}
+      </div>
+    </SkillCategory>
+
+    <SkillCategory title="Soft Skills">
+      <div class="skills-grid">
+        {['Leadership', 'Creativity', 'Discussion', 'Problem Solving', 'Communication', 'Teamwork', 'Passion for Growth'].map(skill => (
+          <SkillTag name={skill} />
+        ))}
+      </div>
+    </SkillCategory>
+  </div>
+</Layout>
+
+<style>
+  .skills-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  h1 {
+    text-align: center;
+    color: var(--primary);
+    margin-bottom: 3rem;
+    text-shadow: var(--primary-glow);
+  }
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+</style>

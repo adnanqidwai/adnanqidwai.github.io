@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact - Adnan Qidwai">
+	<div class="contact-container">
+        <h1>Get in Touch</h1>
+        <p class="contact-intro">
+			I'm always open to new opportunities and collaborations!
+		</p>
+		
+		<div class="contact-methods">
+			<div class="contact-method">
+				<h2>Email</h2>
+                <a href="adgta25@gmail.com">adgta25@gmail.com</a>
+                <a href="adnan.qidwai@students.iiit.ac.in">adnan.qidwai@students.iiit.ac.in</a>
+			</div>
+			
+			<div class="contact-method">
+				<h2>Social Media</h2>
+				<div class="social-links">
+					<a href="https://github.com/adnanqidwai" target="_blank" rel="noopener noreferrer">GitHub</a>
+					<a href="https://linkedin.com/in/adnanqidwai" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.contact-container {
+		max-width: 800px;
+		margin: 0 auto;
+		text-align: center;
+	}
+	h1 {
+		margin-bottom: 1rem;
+	}
+	.contact-intro {
+		font-size: 1.2rem;
+		color: #666;
+		margin-bottom: 3rem;
+	}
+	.contact-methods {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 2rem;
+		text-align: left;
+	}
+	.contact-method {
+		padding: 2rem;
+		border: 2px solid var(--secondary);
+		border-radius: 8px;
+	}
+	.contact-method h2 {
+		margin-bottom: 1rem;
+		font-size: 1.5rem;
+	}
+	.contact-method a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+	.contact-method a:hover {
+		text-decoration: underline;
+	}
+	.social-links {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+</style>

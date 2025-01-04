@@ -1,0 +1,132 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Avatar from "../components/Avatar.astro";
+import SocialIcons from "../components/SocialIcons.astro";
+---
+
+<Layout title="Adnan's Personal Website">
+    <div class="container">
+        <div class="profile-section">
+            <div class="profile-content">
+                <Avatar />
+                <SocialIcons />
+            </div>
+        </div>
+        <div class="content-section">
+            <div class="hero">
+                <h1>Hello, I'm <span class="namehighlight">Adnan</span></h1>
+            </div>
+            
+            <section class="about">
+                <p>
+                    I'm a fourth year undergraduate student at IIIT Hyderabad,
+                    pursuing a B.Tech in Computer Science.  
+                </p>
+                <p>
+                    Over the years in college, I've developed a keen interest in
+                    Machine Learning Research, particularly in the field of
+                    Natural Language Processing. I've had the opportunity to
+                    work on a variety of projects that have helped me gain a 
+                    deeper understanding of the field.
+                    I am currently working on projects related to multimodal 
+                    learning and vision-language models.
+                </p>
+                <p>
+                    Beyond academic projects, I have also participated in industry 
+                    internships. I interned at IBM Research, where I co-lead a project
+                    which involved developing a novel method for code data profiling. 
+                    I also interned at Datazoic Inc, where I worked on developing 
+                    end to end Natural Language Processing applications. 
+                </p>
+                <p>
+                    I really like problem solving and enjoy working on algorithmic
+                    challenges as a hobby. Heres my LeetCode profile if you want to check it out: 
+                    <a class="namehighlight" href="https://leetcode.com/u/adnanqidwai" 
+                    target="_blank" rel="noopener noreferrer">here</a>.
+                    Some other hobbies of mine include travelling, watching YouTube, and exploring new technologies.
+                </p>
+            </section>
+            <h3>
+                <href class="namehighlight">
+                    <a href="https://drive.google.com/file/d/1W7K2dYFWSesfgFWG8gPO71KhjjLu22EY/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <span class="namehighlight">Here's my Resume 📃</span>
+                    </a>
+                </href>
+            </h3>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .container {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 4rem;
+        min-height: calc(100vh - 200px);
+    }
+
+    .profile-section {
+        position: sticky;
+        top: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .profile-content {
+        width: 100%;
+    }
+
+    .content-section {
+        padding-top: 4rem;
+    }
+
+    .hero {
+        text-align: left;
+        margin-bottom: 4rem;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin: 0;
+    }
+
+    .highlight {
+        color: var(--primary);
+    }
+
+    .namehighlight {
+        color: var(--name);
+		text-decoration: none;
+		text-shadow: var(--secondary-glow);
+    }
+
+    .subtitle {
+        font-size: 1.5rem;
+        color: #666;
+        margin: 1rem 0;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary);
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-section {
+            position: static;
+            margin: 2rem 0;
+        }
+
+        .hero {
+            text-align: center;
+        }
+    }
+</style>
