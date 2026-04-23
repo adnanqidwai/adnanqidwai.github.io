@@ -1,3 +1,3 @@
-# Welcome to my github page!
+# Hi!
 
-I will be updating this on a not-so-regular basis😅.
+This is the source for my personal website — [adnanqidwai.github.io](https://adnanqidwai.github.io).
