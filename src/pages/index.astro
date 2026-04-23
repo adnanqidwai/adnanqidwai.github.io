@@ -1,132 +1,923 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Avatar from "../components/Avatar.astro";
-import SocialIcons from "../components/SocialIcons.astro";
+
+const publications = [
+	{
+		venue: "EMNLP 2024",
+		title: "Unraveling the Truth: Do VLMs really Understand Charts?",
+		note: "Consistency and robustness in chart understanding.",
+		url: "https://aclanthology.org/2024.findings-emnlp.973/",
+	},
+	{
+		venue: "ACL 2025",
+		title: "PRAISE: Enhancing Product Descriptions with LLM-Driven Structured Insights",
+		note: "Structured insights from reviews and seller descriptions.",
+		url: "https://aclanthology.org/2025.acl-demo.62/",
+	},
+	{
+		venue: "IJCNLP-AACL 2025",
+		title: "InterChart: Benchmarking Visual Reasoning Across Decomposed and Distributed Chart Information",
+		note: "Reasoning across related charts.",
+		url: "https://aclanthology.org/2025.ijcnlp-long.111/",
+	},
+	{
+		venue: "Middleware 2025",
+		title: "LLM-Aided Customizable Profiling of Code Data Based On Programming Language Concepts",
+		note: "LLMs plus static rules for code-data profiling.",
+		url: "https://arxiv.org/abs/2503.15571",
+	},
+];
+
+const links = [
+	{ label: "Google Scholar", href: "https://scholar.google.com/citations?user=YZhLACgAAAAJ&hl=en", icon: "GS" },
+	{ label: "GitHub", href: "https://github.com/adnanqidwai", icon: "GH" },
+	{ label: "LinkedIn", href: "https://linkedin.com/in/adnanqidwai", icon: "LI" },
+	{ label: "X", href: "https://x.com/adnanqidw_ai", icon: "X" },
+	{ label: "Email", href: "mailto:adgta25@gmail.com", icon: "@" },
+	{ label: "LeetCode", href: "https://leetcode.com/u/adnanqidwai", icon: "LC" },
+];
 ---
 
-<Layout title="Adnan's Personal Website">
-    <div class="container">
-        <div class="profile-section">
-            <div class="profile-content">
-                <Avatar />
-                <SocialIcons />
-            </div>
-        </div>
-        <div class="content-section">
-            <div class="hero">
-                <h1>Hello, I'm <span class="namehighlight">Adnan</span></h1>
-            </div>
-            
-            <section class="about">
-                <p>
-                    I'm a fourth year undergraduate student at IIIT Hyderabad,
-                    pursuing a B.Tech in Computer Science.  
-                </p>
-                <p>
-                    Over the years in college, I've developed a keen interest in
-                    Machine Learning Research, particularly in the field of
-                    Natural Language Processing. I've had the opportunity to
-                    work on a variety of projects that have helped me gain a 
-                    deeper understanding of the field.
-                    I am currently working on projects related to multimodal 
-                    learning and vision-language models.
-                </p>
-                <p>
-                    Beyond academic projects, I have also participated in industry 
-                    internships. I interned at IBM Research, where I co-lead a project
-                    which involved developing a novel method for code data profiling. 
-                    I also interned at Datazoic Inc, where I worked on developing 
-                    end to end Natural Language Processing applications. 
-                </p>
-                <p>
-                    I really like problem solving and enjoy working on algorithmic
-                    challenges as a hobby. Heres my LeetCode profile if you want to check it out: 
-                    <a class="namehighlight" href="https://leetcode.com/u/adnanqidwai" 
-                    target="_blank" rel="noopener noreferrer">here</a>.
-                    Some other hobbies of mine include travelling, watching YouTube, and exploring new technologies.
-                </p>
-            </section>
-            <h3>
-                <href class="namehighlight">
-                    <a href="https://drive.google.com/file/d/1W7K2dYFWSesfgFWG8gPO71KhjjLu22EY/view?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer">
-                    <span class="namehighlight">Here's my Resume 📃</span>
-                    </a>
-                </href>
-            </h3>
-        </div>
-    </div>
+<Layout
+	title="Adnan Qidwai"
+	description="Adnan Qidwai - Research Engineer at IBM Research working on agents, retrieval, multimodality, and semantic data systems."
+	showNav={false}
+>
+	<div class="win98-desktop" data-desktop>
+		<div class="desktop-layout">
+			<div class="desktop-icons" aria-label="Desktop shortcuts">
+				<button class="desktop-icon" type="button" data-open-window="about-window" aria-controls="about-window">
+					<span class="icon-box" aria-hidden="true">AQ</span>
+					<span class="icon-label">About Me</span>
+				</button>
+				<button class="desktop-icon" type="button" data-open-window="work-window" aria-controls="work-window">
+					<span class="icon-box" aria-hidden="true">W</span>
+					<span class="icon-label">What I like to work on</span>
+				</button>
+				<button class="desktop-icon" type="button" data-open-window="papers-window" aria-controls="papers-window">
+					<span class="icon-box" aria-hidden="true">PDF</span>
+					<span class="icon-label">Papers</span>
+				</button>
+				<a class="desktop-icon" href="https://drive.google.com/file/d/1yvyFKAsxMeuxZrAdgujuMznYLlFfijkD/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+					<span class="icon-box" aria-hidden="true">CV</span>
+					<span class="icon-label">Resume</span>
+				</a>
+				<button class="desktop-icon" type="button" data-open-window="links-window" aria-controls="links-window">
+					<span class="icon-box" aria-hidden="true">NET</span>
+					<span class="icon-label">Links</span>
+				</button>
+			</div>
+
+			<div class="stack stack-main">
+				<section
+					class="window about-window is-active"
+					id="about-window"
+					data-window
+					aria-label="About Me window"
+				>
+					<header class="title-bar" data-focus-handle>
+						<span class="title-text">About Me</span>
+						<div class="window-controls">
+							<button type="button" aria-label="Minimize About Me" data-minimize>_</button>
+							<button type="button" aria-label="Close About Me" data-close>x</button>
+						</div>
+					</header>
+					<div class="window-body profile-body">
+						<div class="profile-photo-frame">
+							<img src="/about_me/me.jpeg" alt="Adnan Qidwai" class="profile-photo" />
+						</div>
+						<div class="profile-text">
+							<h1 class="sr-only">Adnan Qidwai</h1>
+							<p class="caption" aria-hidden="true">u/adnanqidwai/about.m</p>
+							<p>
+								Hi! I'm Adnan. I currently work at IBM Research as a
+								Research Engineer in the Data for AI team. My work is
+								centered on semantic data pipelines and streamlining how
+								models ingest and utilize large amounts of knowledge.
+							</p>
+							<p>
+								Beyond my core role, I'm interested in building
+								long-horizon agents, with a particular focus on curating
+								the right training data and creating meaningful metrics to
+								measure their progress. I also enjoy probing frontier models
+								to understand their limits and identifying the specific gaps
+								where their reasoning or reliability starts to drop off.
+							</p>
+							<p>
+								In the past, I worked on multimodal understanding in
+								collaboration with
+								<a href="https://www.cis.upenn.edu/~danroth/" target="_blank" rel="noopener noreferrer">Prof. Dan Roth</a>
+								(UPenn),
+								<a href="https://vgupta123.github.io/" target="_blank" rel="noopener noreferrer">Prof. Vivek Gupta</a>
+								(ASU), and
+								<a href="https://research.adobe.com/" target="_blank" rel="noopener noreferrer">Adobe Research</a>.
+								I also spent time researching LLM jailbreaking as part of
+								the Stanford AI Researcher project.
+							</p>
+							<p class="reach-out">
+								I'm always open to discussing research, new opportunities,
+								or just exchanging ideas. Feel free to reach out!
+							</p>
+						</div>
+					</div>
+				</section>
+
+				<section
+					class="window work-window"
+					id="work-window"
+					data-window
+					aria-label="What I like to work on window"
+				>
+					<header class="title-bar" data-focus-handle>
+						<span class="title-text">What I like to work on</span>
+						<div class="window-controls">
+							<button type="button" aria-label="Minimize What I like to work on" data-minimize>_</button>
+							<button type="button" aria-label="Close What I like to work on" data-close>x</button>
+						</div>
+					</header>
+					<div class="window-body">
+						<p class="caption">Click a thread:</p>
+						<div class="thread-buttons" role="tablist" aria-label="Research threads">
+							<button type="button" class="win-button is-selected" data-thread="planning" role="tab" aria-selected="true">planning in agents</button>
+							<button type="button" class="win-button" data-thread="retrieval" role="tab" aria-selected="false">retrieval systems</button>
+							<button type="button" class="win-button" data-thread="enterprise" role="tab" aria-selected="false">agentic BI</button>
+							<button type="button" class="win-button" data-thread="semantic" role="tab" aria-selected="false">semantic data pipelines</button>
+							<button type="button" class="win-button" data-thread="multimodal" role="tab" aria-selected="false">multimodal robustness</button>
+						</div>
+						<div class="dos-panel" data-thread-output role="tabpanel" aria-live="polite"></div>
+					</div>
+				</section>
+			</div>
+
+			<div class="stack stack-side">
+				<section
+					class="window papers-window"
+					id="papers-window"
+					data-window
+					aria-label="Publications window"
+				>
+					<header class="title-bar" data-focus-handle>
+						<span class="title-text">Publications</span>
+						<div class="window-controls">
+							<button type="button" aria-label="Minimize Publications" data-minimize>_</button>
+							<button type="button" aria-label="Close Publications" data-close>x</button>
+						</div>
+					</header>
+					<div class="window-body">
+						<div class="toolbar">
+							<a class="win-button" href="https://scholar.google.com/citations?user=YZhLACgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Open Scholar</a>
+							<span class="toolbar-hint" aria-hidden="true">4 items</span>
+						</div>
+						<div class="publication-list">
+							{publications.map((publication) => (
+								<article class="publication">
+									<div class="venue">{publication.venue}</div>
+									<h2>
+										<a
+											href={publication.url}
+											target="_blank"
+											rel="noopener noreferrer"
+										>
+											{publication.title}
+										</a>
+									</h2>
+									<p class="note">{publication.note}</p>
+								</article>
+							))}
+						</div>
+					</div>
+				</section>
+
+				<section
+					class="window links-window"
+					id="links-window"
+					data-window
+					aria-label="Links window"
+				>
+					<header class="title-bar" data-focus-handle>
+						<span class="title-text">Links</span>
+						<div class="window-controls">
+							<button type="button" aria-label="Minimize Links" data-minimize>_</button>
+							<button type="button" aria-label="Close Links" data-close>x</button>
+						</div>
+					</header>
+					<div class="window-body">
+						<div class="link-list">
+							{links.map((link) => (
+								<a
+									href={link.href}
+									target={link.href.startsWith("mailto:") ? undefined : "_blank"}
+									rel={link.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+								>
+									<span class="small-icon" aria-hidden="true">{link.icon}</span>
+									<span>{link.label}</span>
+								</a>
+							))}
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
 </Layout>
 
+<script>
+	const threadCopy: Record<string, { head: string; body: string }> = {
+		planning: {
+			head: "planning in agents",
+			body: "Studying how long-horizon agents break through puzzles that test planning, memory, and unsolvability detection, mapping where today's frontier models fail at extended reasoning. Paper under review.",
+		},
+		retrieval: {
+			head: "retrieval systems",
+			body: "Working on multi-index methods to improve recall for live RAG systems under fixed cost constraints, especially when a single embedding space or view of the data seems to be insufficient. Paper under review.",
+		},
+		enterprise: {
+			head: "agentic BI",
+			body: "Trying to build a rich context layer for agents to talk to data spanning many structured and unstructured sources so that agents can reason with the right context.",
+		},
+		semantic: {
+			head: "semantic data pipelines",
+			body: "Optimizing LLM-powered semantic data processing pipelines for Pareto optimality over cost and accuracy: agentic search over a large rewrite space, including operator fusion and reordering, model and prompt substitution, routing, and execution choices, to surface cost/accuracy tradeoffs under a user's budget.",
+		},
+		multimodal: {
+			head: "multimodal robustness",
+			body: "Mostly focused on VLM understanding and robustness: whether models actually understand charts and visual information, where they break, and how to evaluate reasoning beyond surface pattern matching.",
+		},
+	};
+
+	const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+	const windows = Array.from(document.querySelectorAll<HTMLElement>("[data-window]"));
+	let topZ = 10;
+
+	function focusWindow(win: HTMLElement) {
+		windows.forEach((item) => item.classList.remove("is-active"));
+		win.classList.add("is-active");
+		win.hidden = false;
+		win.classList.remove("is-rolled");
+		topZ += 1;
+		win.style.zIndex = String(topZ);
+	}
+
+	function openWindow(id: string) {
+		const win = document.getElementById(id);
+		if (!win) return;
+		const wasHidden = win.hidden;
+		focusWindow(win);
+		if (wasHidden && !prefersReducedMotion) {
+			win.classList.remove("is-opening");
+			void win.offsetWidth;
+			win.classList.add("is-opening");
+			window.setTimeout(() => win.classList.remove("is-opening"), 220);
+		}
+	}
+
+	document.querySelectorAll<HTMLElement>("[data-open-window]").forEach((trigger) => {
+		trigger.addEventListener("click", (event) => {
+			const id = trigger.dataset.openWindow;
+			if (!id) return;
+			event.preventDefault();
+			openWindow(id);
+		});
+	});
+
+	document.querySelectorAll<HTMLButtonElement>("[data-close]").forEach((button) => {
+		button.addEventListener("click", () => {
+			const win = button.closest<HTMLElement>("[data-window]");
+			if (!win) return;
+			win.hidden = true;
+			const trigger = document.querySelector<HTMLElement>(`[data-open-window="${win.id}"]`);
+			if (trigger) trigger.focus();
+		});
+	});
+
+	document.querySelectorAll<HTMLButtonElement>("[data-minimize]").forEach((button) => {
+		button.addEventListener("click", (event) => {
+			event.stopPropagation();
+			const win = button.closest<HTMLElement>("[data-window]");
+			if (!win) return;
+			win.classList.toggle("is-rolled");
+		});
+	});
+
+	document.querySelectorAll<HTMLElement>("[data-focus-handle]").forEach((handle) => {
+		handle.addEventListener("dblclick", () => {
+			const win = handle.closest<HTMLElement>("[data-window]");
+			if (win) win.classList.toggle("is-rolled");
+		});
+	});
+
+	const threadOutput = document.querySelector<HTMLElement>("[data-thread-output]");
+	const threadButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-thread]"));
+	let typeTimer: number | null = null;
+
+	function renderThread(key: string) {
+		if (!threadOutput || !threadCopy[key]) return;
+		threadButtons.forEach((btn) => {
+			const selected = btn.dataset.thread === key;
+			btn.classList.toggle("is-selected", selected);
+			btn.setAttribute("aria-selected", selected ? "true" : "false");
+		});
+		const { head, body } = threadCopy[key];
+		if (typeTimer !== null) {
+			window.clearInterval(typeTimer);
+			typeTimer = null;
+		}
+		if (prefersReducedMotion) {
+			threadOutput.innerHTML = `<span class="prompt">&gt;&nbsp;${head}</span><br />${body}<span class="caret" aria-hidden="true"></span>`;
+			return;
+		}
+		threadOutput.innerHTML = `<span class="prompt">&gt;&nbsp;${head}</span><br /><span class="typed"></span><span class="caret" aria-hidden="true"></span>`;
+		const typedEl = threadOutput.querySelector<HTMLElement>(".typed");
+		if (!typedEl) return;
+		let i = 0;
+		typeTimer = window.setInterval(() => {
+			if (i >= body.length) {
+				if (typeTimer !== null) {
+					window.clearInterval(typeTimer);
+					typeTimer = null;
+				}
+				return;
+			}
+			typedEl.textContent = body.slice(0, i + 1);
+			i += 1;
+		}, 14);
+	}
+
+	threadButtons.forEach((button) => {
+		button.addEventListener("click", () => {
+			const key = button.dataset.thread;
+			if (key) renderThread(key);
+		});
+	});
+
+	renderThread("planning");
+
+	windows.forEach((win) => {
+		win.addEventListener("pointerdown", () => focusWindow(win));
+	});
+</script>
+
 <style>
-    .container {
-        display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: 4rem;
-        min-height: calc(100vh - 200px);
-    }
+	:global(html) {
+		background: #111111;
+	}
 
-    .profile-section {
-        position: sticky;
-        top: 0;
-        height: 100%;
-        display: flex;
-        align-items: center;
-    }
+	.win98-desktop,
+	.win98-desktop * {
+		box-sizing: border-box;
+	}
 
-    .profile-content {
-        width: 100%;
-    }
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
+	}
 
-    .content-section {
-        padding-top: 4rem;
-    }
+	.win98-desktop {
+		--desktop-bg: #111111;
+		--desktop-grid: rgba(255, 255, 255, 0.045);
+		--window-bg: #e6e2d8;
+		--window-panel: #f1eee7;
+		--window-light: #ffffff;
+		--window-mid: #9b968c;
+		--window-shadow: #343230;
+		--ink: #111111;
+		--ink-muted: #4b4740;
+		--ink-link: #1a4a8a;
+		--title-start: #111111;
+		--title-end: #5a574f;
+		--title-inactive-start: #6c6860;
+		--title-inactive-end: #9b968c;
+		--terminal-text: #f4efe6;
+		--terminal-accent: #8cc98c;
+		position: relative;
+		min-height: 100svh;
+		overflow-x: clip;
+		padding: 32px 28px 44px;
+		background:
+			radial-gradient(1200px 700px at 78% -10%, rgba(120, 108, 96, 0.18), transparent 60%),
+			radial-gradient(900px 500px at -10% 110%, rgba(80, 70, 60, 0.22), transparent 65%),
+			linear-gradient(90deg, var(--desktop-grid) 1px, transparent 1px),
+			linear-gradient(var(--desktop-grid) 1px, transparent 1px),
+			var(--desktop-bg);
+		background-size: auto, auto, 34px 34px, 34px 34px, auto;
+		color: var(--ink);
+		font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+		font-size: 13px;
+	}
 
-    .hero {
-        text-align: left;
-        margin-bottom: 4rem;
-    }
+	.desktop-layout {
+		display: grid;
+		grid-template-columns: 118px minmax(0, 1.3fr) minmax(280px, 0.8fr);
+		grid-template-areas: "icons main side";
+		gap: 20px;
+		max-width: 1260px;
+		margin: 0 auto;
+		align-items: start;
+		min-width: 0;
+	}
 
-    .hero h1 {
-        font-size: 3rem;
-        margin: 0;
-    }
+	.desktop-layout > * { min-width: 0; }
 
-    .highlight {
-        color: var(--primary);
-    }
+	.desktop-icons {
+		grid-area: icons;
+		position: sticky;
+		top: 24px;
+		z-index: 2;
+		display: grid;
+		gap: 20px;
+		width: 100%;
+		padding: 8px 0;
+	}
 
-    .namehighlight {
-        color: var(--name);
+	.stack {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		min-width: 0;
+	}
+
+	.stack-main { grid-area: main; }
+	.stack-side { grid-area: side; }
+
+	/* Kept as structural hints; used when inner stacks collapse on narrow viewports. */
+	.about-window { grid-area: about; }
+	.work-window { grid-area: work; }
+	.papers-window { grid-area: papers; }
+	.links-window { grid-area: links; }
+
+	.desktop-icon {
+		display: grid;
+		justify-items: center;
+		gap: 8px;
+		border: 0;
+		background: transparent;
+		color: #ecebe6;
+		text-shadow: 1px 1px 0 #000;
+		font: inherit;
+		line-height: 1.2;
+		cursor: pointer;
 		text-decoration: none;
-		text-shadow: var(--secondary-glow);
-    }
+		padding: 4px 2px;
+		border-radius: 2px;
+	}
 
-    .subtitle {
-        font-size: 1.5rem;
-        color: #666;
-        margin: 1rem 0;
-    }
+	.desktop-icon .icon-label {
+		max-width: 104px;
+		text-align: center;
+	}
 
-    h2 {
-        font-size: 2rem;
-        margin-bottom: 1.5rem;
-        color: var(--primary);
-    }
+	.desktop-icon:focus-visible,
+	.desktop-icon:hover {
+		outline: 1px dotted #ffffff;
+		outline-offset: 2px;
+		background: rgba(255, 255, 255, 0.06);
+	}
 
-    @media (max-width: 768px) {
-        .container {
-            grid-template-columns: 1fr;
-        }
+	.icon-box {
+		display: grid;
+		place-items: center;
+		width: 46px;
+		height: 40px;
+		background: var(--window-bg);
+		color: var(--ink);
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		box-shadow: 1px 1px 0 #000;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.5px;
+		text-shadow: none;
+	}
 
-        .profile-section {
-            position: static;
-            margin: 2rem 0;
-        }
+	.window {
+		position: relative;
+		z-index: 4;
+		width: 100%;
+		min-width: 0;
+		max-width: 100%;
+		box-sizing: border-box;
+		background: var(--window-bg);
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		box-shadow: 3px 3px 0 #000, 6px 6px 24px rgba(0, 0, 0, 0.35);
+	}
 
-        .hero {
-            text-align: center;
-        }
-    }
+
+	.window.is-active {
+		z-index: 20;
+	}
+
+	.window.is-rolled .window-body {
+		display: none;
+	}
+
+	.window[hidden] {
+		display: none;
+	}
+
+	@keyframes window-open {
+		from { opacity: 0; transform: translateY(-4px) scale(0.985); }
+		to { opacity: 1; transform: none; }
+	}
+
+	.window.is-opening {
+		animation: window-open 180ms ease-out both;
+	}
+
+	.title-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		min-height: 26px;
+		padding: 3px 3px 3px 8px;
+		color: var(--window-light);
+		font-weight: 700;
+		background: linear-gradient(90deg, var(--title-inactive-start), var(--title-inactive-end));
+		user-select: none;
+		cursor: default;
+	}
+
+	.window.is-active .title-bar {
+		background: linear-gradient(90deg, var(--title-start), var(--title-end));
+	}
+
+	.title-text {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.window-controls {
+		display: flex;
+		gap: 2px;
+		flex-shrink: 0;
+	}
+
+	.window-controls button,
+	.win-button {
+		background: var(--window-bg);
+		color: var(--ink);
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+		font-size: 12px;
+		line-height: 1;
+		text-decoration: none;
+		cursor: pointer;
+	}
+
+	.window-controls button {
+		width: 22px;
+		height: 20px;
+		padding: 0 0 2px;
+		font-weight: 700;
+		display: grid;
+		place-items: center;
+	}
+
+	.window-controls button:focus-visible,
+	.win-button:focus-visible {
+		outline: 1px dotted var(--ink);
+		outline-offset: -4px;
+	}
+
+	.window-controls button:active,
+	.win-button:active,
+	.win-button.is-selected {
+		border-top-color: var(--window-shadow);
+		border-left-color: var(--window-shadow);
+		border-right-color: var(--window-light);
+		border-bottom-color: var(--window-light);
+	}
+
+	.window-body {
+		margin: 3px;
+		padding: 18px;
+		background: var(--window-bg);
+		border-top: 1px solid var(--window-mid);
+		border-left: 1px solid var(--window-mid);
+		border-right: 1px solid var(--window-light);
+		border-bottom: 1px solid var(--window-light);
+		line-height: 1.45;
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
+
+	.profile-text {
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
+
+	.profile-body {
+		display: grid;
+		grid-template-columns: 300px 1fr;
+		gap: 22px;
+		align-items: start;
+	}
+
+	.profile-photo-frame {
+		padding: 6px;
+		background: var(--window-panel);
+		border-top: 2px solid var(--window-shadow);
+		border-left: 2px solid var(--window-shadow);
+		border-right: 2px solid var(--window-light);
+		border-bottom: 2px solid var(--window-light);
+	}
+
+	.profile-photo {
+		display: block;
+		width: 100%;
+		height: 300px;
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.profile-text h1 {
+		margin: 0 0 6px;
+		font-size: 44px;
+		line-height: 1;
+		letter-spacing: -0.5px;
+	}
+
+	.profile-text .caption {
+		margin-top: -2px;
+		margin-bottom: 14px;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 12px;
+	}
+
+	.profile-text p {
+		margin: 0 0 12px;
+	}
+
+	.profile-text a {
+		color: var(--ink);
+		text-decoration: none;
+		border-bottom: 1px dotted var(--ink-muted);
+	}
+
+	.profile-text a:hover,
+	.profile-text a:focus-visible {
+		color: var(--ink-link);
+		border-bottom-color: var(--ink-link);
+	}
+
+	.profile-text .reach-out {
+		margin-top: 4px;
+		color: var(--ink-muted);
+	}
+
+	h2 {
+		margin: 4px 0 6px;
+		font-size: 15px;
+		line-height: 1.3;
+	}
+
+	.publication h2 a {
+		color: var(--ink);
+		text-decoration: none;
+		border-bottom: 1px dotted var(--ink-muted);
+	}
+
+	.publication h2 a:hover,
+	.publication h2 a:focus-visible {
+		color: var(--ink-link);
+		border-bottom-color: var(--ink-link);
+	}
+
+	p {
+		margin: 0 0 10px;
+	}
+
+	.caption,
+	.venue {
+		color: var(--ink-muted);
+		font-weight: 700;
+	}
+
+	.venue {
+		display: inline-block;
+		margin-bottom: 4px;
+		padding: 1px 6px;
+		background: #dad5c8;
+		border-top: 1px solid var(--window-shadow);
+		border-left: 1px solid var(--window-shadow);
+		border-right: 1px solid var(--window-light);
+		border-bottom: 1px solid var(--window-light);
+		font-size: 11px;
+		letter-spacing: 0.4px;
+		text-transform: uppercase;
+	}
+
+	.thread-buttons,
+	.toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 7px;
+		margin-bottom: 12px;
+	}
+
+	.toolbar-hint {
+		margin-left: auto;
+		color: var(--ink-muted);
+		font-weight: 700;
+		font-size: 11px;
+	}
+
+	.win-button {
+		display: inline-flex;
+		align-items: center;
+		min-height: 25px;
+		padding: 5px 10px;
+	}
+
+	.dos-panel {
+		min-height: 110px;
+		margin-bottom: 4px;
+		padding: 14px 14px 12px;
+		background: #000;
+		color: var(--terminal-text);
+		border-top: 2px solid var(--window-shadow);
+		border-left: 2px solid var(--window-shadow);
+		border-right: 2px solid var(--window-light);
+		border-bottom: 2px solid var(--window-light);
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 13px;
+		line-height: 1.55;
+		white-space: normal;
+	}
+
+	.dos-panel .prompt {
+		color: var(--terminal-accent);
+	}
+
+	.dos-panel .caret {
+		display: inline-block;
+		width: 9px;
+		height: 15px;
+		margin-left: 3px;
+		vertical-align: text-bottom;
+		background: var(--terminal-text);
+		animation: caret-blink 1s steps(2, start) infinite;
+	}
+
+	@keyframes caret-blink {
+		to { opacity: 0; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.dos-panel .caret { animation: none; }
+		.window.is-opening { animation: none; }
+	}
+
+	.publication-list {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 10px;
+	}
+
+	.publication {
+		padding: 12px;
+		background: var(--window-panel);
+		border-top: 2px solid var(--window-shadow);
+		border-left: 2px solid var(--window-shadow);
+		border-right: 2px solid var(--window-light);
+		border-bottom: 2px solid var(--window-light);
+	}
+
+	.publication .note {
+		margin-bottom: 0;
+	}
+
+	.link-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 4px 12px;
+	}
+
+	.link-list a {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 6px 6px;
+		color: var(--ink);
+		text-decoration: none;
+		border: 1px solid transparent;
+	}
+
+	.link-list a:hover,
+	.link-list a:focus-visible {
+		background: #c9c4b8;
+		border-color: var(--window-shadow);
+		outline: none;
+	}
+
+	.small-icon {
+		display: inline-grid;
+		place-items: center;
+		width: 24px;
+		height: 20px;
+		background: var(--window-panel);
+		color: var(--ink);
+		border-top: 1px solid var(--window-light);
+		border-left: 1px solid var(--window-light);
+		border-right: 1px solid var(--window-shadow);
+		border-bottom: 1px solid var(--window-shadow);
+		font-size: 10px;
+		font-weight: 700;
+		letter-spacing: 0.4px;
+	}
+
+	@media (max-width: 1100px) {
+		.desktop-layout {
+			grid-template-columns: 118px minmax(0, 1fr);
+			grid-template-areas:
+				"icons main"
+				"icons side";
+		}
+		.profile-body {
+			grid-template-columns: 240px 1fr;
+		}
+		.link-list {
+			grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+		}
+	}
+
+
+	@media (max-width: 760px) {
+		.win98-desktop {
+			min-height: auto;
+			padding: 16px 14px 28px;
+		}
+
+		.desktop-layout {
+			grid-template-columns: 1fr;
+			grid-template-areas:
+				"icons"
+				"main"
+				"side";
+			gap: 16px;
+			max-width: none;
+		}
+
+		.stack { gap: 16px; }
+
+		.desktop-icons {
+			position: static;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px 10px;
+			width: 100%;
+			justify-content: flex-start;
+		}
+
+		.desktop-icon {
+			flex: 0 0 auto;
+			min-width: 60px;
+		}
+
+		.desktop-icon {
+			align-content: start;
+		}
+
+		.desktop-icon .icon-label {
+			max-width: 90px;
+			font-size: 12px;
+		}
+
+		.profile-body {
+			grid-template-columns: 1fr;
+		}
+
+		.profile-photo-frame {
+			justify-self: start;
+			max-width: 280px;
+		}
+
+		.profile-photo {
+			width: 100%;
+			height: auto;
+			aspect-ratio: 1 / 1;
+		}
+
+		.profile-text h1 {
+			font-size: 36px;
+		}
+	}
 </style>
