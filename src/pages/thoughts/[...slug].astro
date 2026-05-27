@@ -1,0 +1,90 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import WindowPage from "../../layouts/WindowPage.astro";
+
+export async function getStaticPaths() {
+	const posts = await getCollection("writings", ({ data }) => !data.draft);
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}
+
+type Props = { post: CollectionEntry<"writings"> };
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const dateFmt = new Intl.DateTimeFormat("en-US", {
+	year: "numeric",
+	month: "long",
+	day: "2-digit",
+});
+
+const base = import.meta.env.BASE_URL;
+const thoughtsHref = `${base.replace(/\/$/, "")}/thoughts/`;
+---
+
+<WindowPage
+	title={`${post.data.title} — Adnan Qidwai`}
+	windowTitle={post.data.title}
+	description={post.data.description}
+	backHref={thoughtsHref}
+	backLabel="← Back to thoughts"
+>
+	<header class="post-header">
+		<p class="caption">u/adnanqidwai/thoughts/{post.slug}.md</p>
+		<h1>{post.data.title}</h1>
+		<div class="post-meta">
+			<time datetime={post.data.pubDate.toISOString()}>
+				{dateFmt.format(post.data.pubDate)}
+			</time>
+			{post.data.updatedDate && (
+				<span>· updated {dateFmt.format(post.data.updatedDate)}</span>
+			)}
+			{post.data.tags.length > 0 && (
+				<span class="tags">
+					{post.data.tags.map((t) => <span class="tag">#{t}</span>)}
+				</span>
+			)}
+		</div>
+	</header>
+
+	<article class="prose">
+		<Content />
+	</article>
+</WindowPage>
+
+<style>
+	.post-header { margin-bottom: 20px; }
+
+	.caption {
+		margin: 0 0 6px;
+		color: #4b4740;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 12px;
+		font-weight: 700;
+	}
+
+	.post-header h1 {
+		margin: 0 0 8px;
+		font-size: 32px;
+		line-height: 1.15;
+		letter-spacing: -0.4px;
+	}
+
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 11px;
+		color: #4b4740;
+		font-weight: 700;
+		letter-spacing: 0.3px;
+		text-transform: uppercase;
+	}
+
+	.tags { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+	.tag { color: #1a4a8a; }
+</style>

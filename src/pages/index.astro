@@ -1,7 +1,29 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const thoughtPosts = (
+	await getCollection("writings", ({ data }) => !data.draft)
+)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
+
+const thoughtDateFmt = new Intl.DateTimeFormat("en-US", {
+	year: "numeric",
+	month: "short",
+	day: "2-digit",
+});
+
+const baseUrl = import.meta.env.BASE_URL;
+const thoughtsBase = `${baseUrl.replace(/\/$/, "")}/thoughts/`;
 
 const publications = [
+	{
+		venue: "ACM CAIS 2026",
+		title: "CAMI: Practical Cost-Aware Agent-Guided Multi-Indexing for Semantic Retrieval",
+		note: "Efficient offline exploration of multi-index retrieval methods.",
+		url: "https://www.caisconf.org/program/2026/papers/cami-cost-aware-agent-guided-multi-indexing-for-semantic-retrieval/",
+	},
 	{
 		venue: "EMNLP 2024",
 		title: "Unraveling the Truth: Do VLMs really Understand Charts?",
@@ -45,29 +67,6 @@ const links = [
 >
 	<div class="win98-desktop" data-desktop>
 		<div class="desktop-layout">
-			<div class="desktop-icons" aria-label="Desktop shortcuts">
-				<button class="desktop-icon" type="button" data-open-window="about-window" aria-controls="about-window">
-					<span class="icon-box" aria-hidden="true">AQ</span>
-					<span class="icon-label">About Me</span>
-				</button>
-				<button class="desktop-icon" type="button" data-open-window="work-window" aria-controls="work-window">
-					<span class="icon-box" aria-hidden="true">W</span>
-					<span class="icon-label">What I like to work on</span>
-				</button>
-				<button class="desktop-icon" type="button" data-open-window="papers-window" aria-controls="papers-window">
-					<span class="icon-box" aria-hidden="true">PDF</span>
-					<span class="icon-label">Papers</span>
-				</button>
-				<a class="desktop-icon" href="https://drive.google.com/file/d/1yvyFKAsxMeuxZrAdgujuMznYLlFfijkD/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-					<span class="icon-box" aria-hidden="true">CV</span>
-					<span class="icon-label">Resume</span>
-				</a>
-				<button class="desktop-icon" type="button" data-open-window="links-window" aria-controls="links-window">
-					<span class="icon-box" aria-hidden="true">NET</span>
-					<span class="icon-label">Links</span>
-				</button>
-			</div>
-
 			<div class="stack stack-main">
 				<section
 					class="window about-window is-active"
@@ -77,10 +76,6 @@ const links = [
 				>
 					<header class="title-bar" data-focus-handle>
 						<span class="title-text">About Me</span>
-						<div class="window-controls">
-							<button type="button" aria-label="Minimize About Me" data-minimize>_</button>
-							<button type="button" aria-label="Close About Me" data-close>x</button>
-						</div>
 					</header>
 					<div class="window-body profile-body">
 						<div class="profile-photo-frame">
@@ -92,8 +87,9 @@ const links = [
 							<p>
 								Hi! I'm Adnan. I currently work at IBM Research as a
 								Research Engineer in the Data for AI team. My work is
-								centered on semantic data pipelines and streamlining how
-								models ingest and utilize large amounts of knowledge.
+								centered on retrieval optimization and streamlining how
+								models ingest and utilize large amounts of knowledge across
+								many structured and unstructured sources.
 							</p>
 							<p>
 								Beyond my core role, I'm interested in building
@@ -118,6 +114,10 @@ const links = [
 								I'm always open to discussing research, new opportunities,
 								or just exchanging ideas. Feel free to reach out!
 							</p>
+							<div class="profile-actions" aria-label="Primary profile links">
+								<a class="win-button" href="https://drive.google.com/file/d/1yvyFKAsxMeuxZrAdgujuMznYLlFfijkD/view?usp=sharing" target="_blank" rel="noopener noreferrer">Resume</a>
+								<a class="win-button" href="mailto:adgta25@gmail.com">Email</a>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -130,17 +130,13 @@ const links = [
 				>
 					<header class="title-bar" data-focus-handle>
 						<span class="title-text">What I like to work on</span>
-						<div class="window-controls">
-							<button type="button" aria-label="Minimize What I like to work on" data-minimize>_</button>
-							<button type="button" aria-label="Close What I like to work on" data-close>x</button>
-						</div>
 					</header>
 					<div class="window-body">
 						<p class="caption">Click a thread:</p>
 						<div class="thread-buttons" role="tablist" aria-label="Research threads">
 							<button type="button" class="win-button is-selected" data-thread="planning" role="tab" aria-selected="true">planning in agents</button>
 							<button type="button" class="win-button" data-thread="retrieval" role="tab" aria-selected="false">retrieval systems</button>
-							<button type="button" class="win-button" data-thread="enterprise" role="tab" aria-selected="false">agentic BI</button>
+							<button type="button" class="win-button" data-thread="enterprise" role="tab" aria-selected="false">Context for Agents</button>
 							<button type="button" class="win-button" data-thread="semantic" role="tab" aria-selected="false">semantic data pipelines</button>
 							<button type="button" class="win-button" data-thread="multimodal" role="tab" aria-selected="false">multimodal robustness</button>
 						</div>
@@ -158,32 +154,32 @@ const links = [
 				>
 					<header class="title-bar" data-focus-handle>
 						<span class="title-text">Publications</span>
-						<div class="window-controls">
-							<button type="button" aria-label="Minimize Publications" data-minimize>_</button>
-							<button type="button" aria-label="Close Publications" data-close>x</button>
-						</div>
 					</header>
 					<div class="window-body">
 						<div class="toolbar">
-							<a class="win-button" href="https://scholar.google.com/citations?user=YZhLACgAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">Open Scholar</a>
-							<span class="toolbar-hint" aria-hidden="true">4 items</span>
+							<span class="toolbar-hint" aria-hidden="true">{publications.length} items</span>
 						</div>
-						<div class="publication-list">
-							{publications.map((publication) => (
-								<article class="publication">
-									<div class="venue">{publication.venue}</div>
-									<h2>
-										<a
-											href={publication.url}
-											target="_blank"
-											rel="noopener noreferrer"
-										>
-											{publication.title}
-										</a>
-									</h2>
-									<p class="note">{publication.note}</p>
-								</article>
-							))}
+						<div class="publication-scroll" data-scroll-shell>
+							<div class="publication-list" data-scroll-content tabindex="0" aria-label="Publications list">
+								{publications.map((publication) => (
+									<article class="publication">
+										<div class="venue">{publication.venue}</div>
+										<h2>
+											<a
+												href={publication.url}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												{publication.title}
+											</a>
+										</h2>
+										<p class="note">{publication.note}</p>
+									</article>
+								))}
+							</div>
+							<div class="publication-scrollbar" data-scroll-track aria-hidden="true">
+								<span class="publication-scrollbar-thumb" data-scroll-thumb></span>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -196,10 +192,6 @@ const links = [
 				>
 					<header class="title-bar" data-focus-handle>
 						<span class="title-text">Links</span>
-						<div class="window-controls">
-							<button type="button" aria-label="Minimize Links" data-minimize>_</button>
-							<button type="button" aria-label="Close Links" data-close>x</button>
-						</div>
 					</header>
 					<div class="window-body">
 						<div class="link-list">
@@ -216,6 +208,39 @@ const links = [
 						</div>
 					</div>
 				</section>
+
+				<section
+					class="window thoughts-window"
+					id="thoughts-window"
+					data-window
+					aria-label="Thoughts window"
+				>
+					<header class="title-bar" data-focus-handle>
+						<span class="title-text">Thoughts</span>
+					</header>
+					<div class="window-body">
+						<div class="toolbar">
+							<a class="win-button" href={thoughtsBase}>Open all</a>
+							<span class="toolbar-hint" aria-hidden="true">{thoughtPosts.length} {thoughtPosts.length === 1 ? "item" : "items"}</span>
+						</div>
+						{thoughtPosts.length === 0 ? (
+							<p class="caption">No posts yet.</p>
+						) : (
+							<ul class="thoughts-list">
+								{thoughtPosts.map((post) => (
+									<li class="thoughts-item">
+										<a class="thoughts-link" href={`${thoughtsBase}${post.slug}/`}>
+											<span class="thoughts-date">
+												{thoughtDateFmt.format(post.data.pubDate)}
+											</span>
+											<span class="thoughts-title">{post.data.title}</span>
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
+				</section>
 			</div>
 		</div>
 	</div>
@@ -225,23 +250,23 @@ const links = [
 	const threadCopy: Record<string, { head: string; body: string }> = {
 		planning: {
 			head: "planning in agents",
-			body: "Studying how long-horizon agents break through puzzles that test planning, memory, and unsolvability detection, mapping where today's frontier models fail at extended reasoning. Paper under review.",
+			body: "Studying how long-horizon agents break through puzzles that test planning, memory, and unsolvability detection. Do they report their failures, or do they continue following instructions? Paper under review.",
 		},
 		retrieval: {
 			head: "retrieval systems",
-			body: "Working on multi-index methods to improve recall for live RAG systems under fixed cost constraints, especially when a single embedding space or view of the data seems to be insufficient. Paper under review.",
+			body: "Working on multi-index retrieval methods and vectorless retrieval.",
 		},
 		enterprise: {
-			head: "agentic BI",
-			body: "Trying to build a rich context layer for agents to talk to data spanning many structured and unstructured sources so that agents can reason with the right context.",
+			head: "Context for Agents",
+			body: "Building a rich layer for agents to talk to data spanning many structured and unstructured sources so that agents can reason with the right context.",
 		},
 		semantic: {
 			head: "semantic data pipelines",
-			body: "Optimizing LLM-powered semantic data processing pipelines for Pareto optimality over cost and accuracy: agentic search over a large rewrite space, including operator fusion and reordering, model and prompt substitution, routing, and execution choices, to surface cost/accuracy tradeoffs under a user's budget.",
+			body: "Optimizing LLM-powered semantic data processing pipelines for Pareto optimality over cost and accuracy",
 		},
 		multimodal: {
 			head: "multimodal robustness",
-			body: "Mostly focused on VLM understanding and robustness: whether models actually understand charts and visual information, where they break, and how to evaluate reasoning beyond surface pattern matching.",
+			body: "Mostly focused on VLM understanding and robustness: whether models actually understand charts and visual information, where they break, and how to evaluate reasoning under the surface ",
 		},
 	};
 
@@ -253,59 +278,9 @@ const links = [
 	function focusWindow(win: HTMLElement) {
 		windows.forEach((item) => item.classList.remove("is-active"));
 		win.classList.add("is-active");
-		win.hidden = false;
-		win.classList.remove("is-rolled");
 		topZ += 1;
 		win.style.zIndex = String(topZ);
 	}
-
-	function openWindow(id: string) {
-		const win = document.getElementById(id);
-		if (!win) return;
-		const wasHidden = win.hidden;
-		focusWindow(win);
-		if (wasHidden && !prefersReducedMotion) {
-			win.classList.remove("is-opening");
-			void win.offsetWidth;
-			win.classList.add("is-opening");
-			window.setTimeout(() => win.classList.remove("is-opening"), 220);
-		}
-	}
-
-	document.querySelectorAll<HTMLElement>("[data-open-window]").forEach((trigger) => {
-		trigger.addEventListener("click", (event) => {
-			const id = trigger.dataset.openWindow;
-			if (!id) return;
-			event.preventDefault();
-			openWindow(id);
-		});
-	});
-
-	document.querySelectorAll<HTMLButtonElement>("[data-close]").forEach((button) => {
-		button.addEventListener("click", () => {
-			const win = button.closest<HTMLElement>("[data-window]");
-			if (!win) return;
-			win.hidden = true;
-			const trigger = document.querySelector<HTMLElement>(`[data-open-window="${win.id}"]`);
-			if (trigger) trigger.focus();
-		});
-	});
-
-	document.querySelectorAll<HTMLButtonElement>("[data-minimize]").forEach((button) => {
-		button.addEventListener("click", (event) => {
-			event.stopPropagation();
-			const win = button.closest<HTMLElement>("[data-window]");
-			if (!win) return;
-			win.classList.toggle("is-rolled");
-		});
-	});
-
-	document.querySelectorAll<HTMLElement>("[data-focus-handle]").forEach((handle) => {
-		handle.addEventListener("dblclick", () => {
-			const win = handle.closest<HTMLElement>("[data-window]");
-			if (win) win.classList.toggle("is-rolled");
-		});
-	});
 
 	const threadOutput = document.querySelector<HTMLElement>("[data-thread-output]");
 	const threadButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-thread]"));
@@ -352,6 +327,82 @@ const links = [
 	});
 
 	renderThread("planning");
+
+	const scrollShells = Array.from(document.querySelectorAll<HTMLElement>("[data-scroll-shell]"));
+
+	function updateScrollThumb(shell: HTMLElement) {
+		const content = shell.querySelector<HTMLElement>("[data-scroll-content]");
+		const track = shell.querySelector<HTMLElement>("[data-scroll-track]");
+		if (!content || !track) return;
+		const maxScroll = Math.max(0, content.scrollHeight - content.clientHeight);
+		const trackHeight = Math.max(1, track.clientHeight);
+		const thumbHeight = maxScroll === 0
+			? trackHeight
+			: Math.max(44, Math.round((content.clientHeight / content.scrollHeight) * trackHeight));
+		const thumbTop = maxScroll === 0
+			? 0
+			: Math.round((content.scrollTop / maxScroll) * (trackHeight - thumbHeight));
+		shell.style.setProperty("--scroll-thumb-height", `${thumbHeight}px`);
+		shell.style.setProperty("--scroll-thumb-top", `${thumbTop}px`);
+	}
+
+	function scrollContentFromThumbTop(shell: HTMLElement, thumbTop: number) {
+		const content = shell.querySelector<HTMLElement>("[data-scroll-content]");
+		const track = shell.querySelector<HTMLElement>("[data-scroll-track]");
+		const thumb = shell.querySelector<HTMLElement>("[data-scroll-thumb]");
+		if (!content || !track || !thumb) return;
+		const maxScroll = Math.max(0, content.scrollHeight - content.clientHeight);
+		const maxThumbTop = Math.max(1, track.clientHeight - thumb.offsetHeight);
+		const clampedThumbTop = Math.min(Math.max(thumbTop, 0), maxThumbTop);
+		content.scrollTop = (clampedThumbTop / maxThumbTop) * maxScroll;
+		updateScrollThumb(shell);
+	}
+
+	scrollShells.forEach((shell) => {
+		const content = shell.querySelector<HTMLElement>("[data-scroll-content]");
+		const track = shell.querySelector<HTMLElement>("[data-scroll-track]");
+		const thumb = shell.querySelector<HTMLElement>("[data-scroll-thumb]");
+		updateScrollThumb(shell);
+		content?.addEventListener("scroll", () => updateScrollThumb(shell), { passive: true });
+		track?.addEventListener("pointerdown", (event) => {
+			if (!track || !thumb || event.target === thumb) return;
+			event.preventDefault();
+			const trackRect = track.getBoundingClientRect();
+			scrollContentFromThumbTop(shell, event.clientY - trackRect.top - thumb.offsetHeight / 2);
+		});
+		thumb?.addEventListener("pointerdown", (event) => {
+			if (!track || !thumb || !content) return;
+			event.preventDefault();
+			event.stopPropagation();
+			thumb.setPointerCapture(event.pointerId);
+			shell.classList.add("is-scroll-dragging");
+			const startY = event.clientY;
+			const startScrollTop = content.scrollTop;
+			const maxScroll = Math.max(1, content.scrollHeight - content.clientHeight);
+			const maxThumbTop = Math.max(1, track.clientHeight - thumb.offsetHeight);
+			const onPointerMove = (moveEvent: PointerEvent) => {
+				const deltaY = moveEvent.clientY - startY;
+				content.scrollTop = startScrollTop + (deltaY / maxThumbTop) * maxScroll;
+				updateScrollThumb(shell);
+			};
+			const onPointerUp = () => {
+				shell.classList.remove("is-scroll-dragging");
+				if (thumb.hasPointerCapture(event.pointerId)) {
+					thumb.releasePointerCapture(event.pointerId);
+				}
+				thumb.removeEventListener("pointermove", onPointerMove);
+				thumb.removeEventListener("pointerup", onPointerUp);
+				thumb.removeEventListener("pointercancel", onPointerUp);
+			};
+			thumb.addEventListener("pointermove", onPointerMove);
+			thumb.addEventListener("pointerup", onPointerUp);
+			thumb.addEventListener("pointercancel", onPointerUp);
+		});
+	});
+
+	window.addEventListener("resize", () => {
+		scrollShells.forEach(updateScrollThumb);
+	});
 
 	windows.forEach((win) => {
 		win.addEventListener("pointerdown", () => focusWindow(win));
@@ -414,10 +465,12 @@ const links = [
 	}
 
 	.desktop-layout {
+		position: relative;
+		z-index: 2;
 		display: grid;
-		grid-template-columns: 118px minmax(0, 1.3fr) minmax(280px, 0.8fr);
-		grid-template-areas: "icons main side";
-		gap: 20px;
+		grid-template-columns: minmax(620px, 1.45fr) minmax(320px, 0.85fr);
+		grid-template-areas: "main side";
+		gap: 22px;
 		max-width: 1260px;
 		margin: 0 auto;
 		align-items: start;
@@ -425,17 +478,6 @@ const links = [
 	}
 
 	.desktop-layout > * { min-width: 0; }
-
-	.desktop-icons {
-		grid-area: icons;
-		position: sticky;
-		top: 24px;
-		z-index: 2;
-		display: grid;
-		gap: 20px;
-		width: 100%;
-		padding: 8px 0;
-	}
 
 	.stack {
 		display: flex;
@@ -452,52 +494,6 @@ const links = [
 	.work-window { grid-area: work; }
 	.papers-window { grid-area: papers; }
 	.links-window { grid-area: links; }
-
-	.desktop-icon {
-		display: grid;
-		justify-items: center;
-		gap: 8px;
-		border: 0;
-		background: transparent;
-		color: #ecebe6;
-		text-shadow: 1px 1px 0 #000;
-		font: inherit;
-		line-height: 1.2;
-		cursor: pointer;
-		text-decoration: none;
-		padding: 4px 2px;
-		border-radius: 2px;
-	}
-
-	.desktop-icon .icon-label {
-		max-width: 104px;
-		text-align: center;
-	}
-
-	.desktop-icon:focus-visible,
-	.desktop-icon:hover {
-		outline: 1px dotted #ffffff;
-		outline-offset: 2px;
-		background: rgba(255, 255, 255, 0.06);
-	}
-
-	.icon-box {
-		display: grid;
-		place-items: center;
-		width: 46px;
-		height: 40px;
-		background: var(--window-bg);
-		color: var(--ink);
-		border-top: 2px solid var(--window-light);
-		border-left: 2px solid var(--window-light);
-		border-right: 2px solid var(--window-shadow);
-		border-bottom: 2px solid var(--window-shadow);
-		box-shadow: 1px 1px 0 #000;
-		font-size: 11px;
-		font-weight: 700;
-		letter-spacing: 0.5px;
-		text-shadow: none;
-	}
 
 	.window {
 		position: relative;
@@ -519,27 +515,10 @@ const links = [
 		z-index: 20;
 	}
 
-	.window.is-rolled .window-body {
-		display: none;
-	}
-
-	.window[hidden] {
-		display: none;
-	}
-
-	@keyframes window-open {
-		from { opacity: 0; transform: translateY(-4px) scale(0.985); }
-		to { opacity: 1; transform: none; }
-	}
-
-	.window.is-opening {
-		animation: window-open 180ms ease-out both;
-	}
-
 	.title-bar {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: flex-start;
 		gap: 12px;
 		min-height: 26px;
 		padding: 3px 3px 3px 8px;
@@ -560,13 +539,6 @@ const links = [
 		white-space: nowrap;
 	}
 
-	.window-controls {
-		display: flex;
-		gap: 2px;
-		flex-shrink: 0;
-	}
-
-	.window-controls button,
 	.win-button {
 		background: var(--window-bg);
 		color: var(--ink);
@@ -581,22 +553,11 @@ const links = [
 		cursor: pointer;
 	}
 
-	.window-controls button {
-		width: 22px;
-		height: 20px;
-		padding: 0 0 2px;
-		font-weight: 700;
-		display: grid;
-		place-items: center;
-	}
-
-	.window-controls button:focus-visible,
 	.win-button:focus-visible {
 		outline: 1px dotted var(--ink);
 		outline-offset: -4px;
 	}
 
-	.window-controls button:active,
 	.win-button:active,
 	.win-button.is-selected {
 		border-top-color: var(--window-shadow);
@@ -656,9 +617,25 @@ const links = [
 
 	.profile-text .caption {
 		margin-top: -2px;
-		margin-bottom: 14px;
+		margin-bottom: 10px;
 		font-family: "Courier New", ui-monospace, monospace;
 		font-size: 12px;
+	}
+
+	.profile-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin: 8px 0 0;
+	}
+
+	.profile-actions .win-button {
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		padding: 6px 12px;
+		font-weight: 700;
 	}
 
 	.profile-text p {
@@ -679,6 +656,7 @@ const links = [
 
 	.profile-text .reach-out {
 		margin-top: 4px;
+		margin-bottom: 0;
 		color: var(--ink-muted);
 	}
 
@@ -748,7 +726,7 @@ const links = [
 	}
 
 	.dos-panel {
-		min-height: 110px;
+		min-height: 72px;
 		margin-bottom: 4px;
 		padding: 14px 14px 12px;
 		background: #000;
@@ -761,6 +739,7 @@ const links = [
 		font-size: 13px;
 		line-height: 1.55;
 		white-space: normal;
+		overflow-wrap: anywhere;
 	}
 
 	.dos-panel .prompt {
@@ -783,17 +762,85 @@ const links = [
 
 	@media (prefers-reduced-motion: reduce) {
 		.dos-panel .caret { animation: none; }
-		.window.is-opening { animation: none; }
+	}
+
+	.publication-scroll {
+		--scroll-thumb-height: 72px;
+		--scroll-thumb-top: 0px;
+		position: relative;
+		padding-right: 22px;
+	}
+
+	.publication-scroll.is-scroll-dragging {
+		user-select: none;
 	}
 
 	.publication-list {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
 		gap: 10px;
+		max-height: clamp(260px, 38svh, 340px);
+		overflow-y: scroll;
+		overscroll-behavior: contain;
+		scrollbar-width: none;
+	}
+
+	.publication-list::-webkit-scrollbar {
+		width: 0;
+		height: 0;
+	}
+
+	.publication-scrollbar {
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: 14px;
+		background: var(--window-bg);
+		border-top: 1px solid var(--window-shadow);
+		border-left: 1px solid var(--window-mid);
+		border-right: 1px solid var(--window-light);
+		border-bottom: 1px solid var(--window-light);
+		cursor: pointer;
+	}
+
+	.publication-scrollbar::before {
+		content: "";
+		position: absolute;
+		inset: 2px;
+		background:
+			repeating-linear-gradient(
+				45deg,
+				rgba(52, 50, 48, 0.14) 0,
+				rgba(52, 50, 48, 0.14) 1px,
+				transparent 1px,
+				transparent 4px
+			);
+	}
+
+	.publication-scrollbar-thumb {
+		position: absolute;
+		top: var(--scroll-thumb-top);
+		left: 2px;
+		right: 2px;
+		height: var(--scroll-thumb-height);
+		min-height: 44px;
+		background: var(--window-mid);
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.18);
+		cursor: grab;
+		touch-action: none;
+	}
+
+	.publication-scroll.is-scroll-dragging .publication-scrollbar-thumb {
+		cursor: grabbing;
 	}
 
 	.publication {
-		padding: 12px;
+		padding: 10px;
 		background: var(--window-panel);
 		border-top: 2px solid var(--window-shadow);
 		border-left: 2px solid var(--window-shadow);
@@ -803,6 +850,53 @@ const links = [
 
 	.publication .note {
 		margin-bottom: 0;
+	}
+
+	.thoughts-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 8px;
+	}
+
+	.thoughts-item { margin: 0; }
+
+	.thoughts-link {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 10px;
+		align-items: baseline;
+		padding: 8px 10px;
+		text-decoration: none;
+		color: var(--ink);
+		background: var(--window-panel);
+		border-top: 2px solid var(--window-shadow);
+		border-left: 2px solid var(--window-shadow);
+		border-right: 2px solid var(--window-light);
+		border-bottom: 2px solid var(--window-light);
+	}
+
+	.thoughts-link:hover,
+	.thoughts-link:focus-visible {
+		background: #ffffff;
+		outline: 1px dotted var(--ink);
+		outline-offset: -4px;
+	}
+
+	.thoughts-date {
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 11px;
+		color: var(--ink-muted);
+		font-weight: 700;
+		letter-spacing: 0.3px;
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.thoughts-title {
+		font-weight: 700;
+		line-height: 1.3;
 	}
 
 	.link-list {
@@ -846,10 +940,10 @@ const links = [
 
 	@media (max-width: 1100px) {
 		.desktop-layout {
-			grid-template-columns: 118px minmax(0, 1fr);
+			grid-template-columns: minmax(0, 1fr);
 			grid-template-areas:
-				"icons main"
-				"icons side";
+				"main"
+				"side";
 		}
 		.profile-body {
 			grid-template-columns: 240px 1fr;
@@ -869,7 +963,6 @@ const links = [
 		.desktop-layout {
 			grid-template-columns: 1fr;
 			grid-template-areas:
-				"icons"
 				"main"
 				"side";
 			gap: 16px;
@@ -877,29 +970,6 @@ const links = [
 		}
 
 		.stack { gap: 16px; }
-
-		.desktop-icons {
-			position: static;
-			display: flex;
-			flex-wrap: wrap;
-			gap: 12px 10px;
-			width: 100%;
-			justify-content: flex-start;
-		}
-
-		.desktop-icon {
-			flex: 0 0 auto;
-			min-width: 60px;
-		}
-
-		.desktop-icon {
-			align-content: start;
-		}
-
-		.desktop-icon .icon-label {
-			max-width: 90px;
-			font-size: 12px;
-		}
 
 		.profile-body {
 			grid-template-columns: 1fr;

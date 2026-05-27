@@ -1,0 +1,286 @@
+---
+import Layout from "./Layout.astro";
+
+interface Props {
+	title: string;
+	pageTitle?: string;
+	windowTitle: string;
+	description?: string;
+	backHref?: string;
+	backLabel?: string;
+}
+
+const {
+	title,
+	windowTitle,
+	description,
+	backHref = import.meta.env.BASE_URL,
+	backLabel = "← Back to desktop",
+} = Astro.props;
+---
+
+<Layout title={title} description={description}>
+	<div class="win98-page">
+		<div class="page-shell">
+			<nav class="page-nav" aria-label="Breadcrumb">
+				<a class="back-link" href={backHref}>{backLabel}</a>
+			</nav>
+
+			<section class="window is-active" aria-label={windowTitle}>
+				<header class="title-bar">
+					<span class="title-text">{windowTitle}</span>
+					<div class="window-controls">
+						<a href={backHref} aria-label="Close" class="close-btn">x</a>
+					</div>
+				</header>
+				<div class="window-body">
+					<slot />
+				</div>
+			</section>
+		</div>
+	</div>
+</Layout>
+
+<style>
+	.win98-page,
+	.win98-page * { box-sizing: border-box; }
+
+	.win98-page {
+		--desktop-bg: #111111;
+		--desktop-grid: rgba(255, 255, 255, 0.045);
+		--window-bg: #e6e2d8;
+		--window-panel: #f1eee7;
+		--window-light: #ffffff;
+		--window-mid: #9b968c;
+		--window-shadow: #343230;
+		--ink: #111111;
+		--ink-muted: #4b4740;
+		--ink-link: #1a4a8a;
+		--title-start: #111111;
+		--title-end: #5a574f;
+		--terminal-text: #f4efe6;
+		--terminal-accent: #8cc98c;
+
+		min-height: 100svh;
+		position: relative;
+		overflow-x: clip;
+		padding: 32px 28px 64px;
+		background:
+			radial-gradient(1200px 700px at 78% -10%, rgba(120, 108, 96, 0.18), transparent 60%),
+			radial-gradient(900px 500px at -10% 110%, rgba(80, 70, 60, 0.22), transparent 65%),
+			linear-gradient(90deg, var(--desktop-grid) 1px, transparent 1px),
+			linear-gradient(var(--desktop-grid) 1px, transparent 1px),
+			var(--desktop-bg);
+		background-size: auto, auto, 34px 34px, 34px 34px, auto;
+		color: var(--ink);
+		font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+		font-size: 14px;
+	}
+
+	.page-shell {
+		position: relative;
+		z-index: 2;
+		max-width: 880px;
+		margin: 0 auto;
+	}
+
+	.page-nav {
+		margin-bottom: 14px;
+	}
+
+	.back-link {
+		display: inline-block;
+		padding: 4px 8px;
+		color: #ecebe6;
+		text-decoration: none;
+		text-shadow: 1px 1px 0 #000;
+		border: 1px dotted transparent;
+	}
+	.back-link:hover,
+	.back-link:focus-visible {
+		outline: 1px dotted #ffffff;
+		outline-offset: 2px;
+		background: rgba(255, 255, 255, 0.06);
+	}
+
+	.window {
+		background: var(--window-bg);
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		box-shadow: 3px 3px 0 #000, 6px 6px 24px rgba(0, 0, 0, 0.35);
+	}
+
+	.title-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 12px;
+		min-height: 26px;
+		padding: 3px 3px 3px 8px;
+		color: var(--window-light);
+		font-weight: 700;
+		background: linear-gradient(90deg, var(--title-start), var(--title-end));
+		user-select: none;
+	}
+
+	.title-text {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.window-controls { display: flex; gap: 2px; }
+
+	.close-btn {
+		display: grid;
+		place-items: center;
+		width: 22px;
+		height: 20px;
+		padding: 0 0 2px;
+		background: var(--window-bg);
+		color: var(--ink);
+		border-top: 2px solid var(--window-light);
+		border-left: 2px solid var(--window-light);
+		border-right: 2px solid var(--window-shadow);
+		border-bottom: 2px solid var(--window-shadow);
+		font: 700 12px/1 "MS Sans Serif", Tahoma, Geneva, sans-serif;
+		text-decoration: none;
+	}
+	.close-btn:active {
+		border-top-color: var(--window-shadow);
+		border-left-color: var(--window-shadow);
+		border-right-color: var(--window-light);
+		border-bottom-color: var(--window-light);
+	}
+
+	.window-body {
+		margin: 3px;
+		padding: 22px 24px 28px;
+		background: var(--window-bg);
+		border-top: 1px solid var(--window-mid);
+		border-left: 1px solid var(--window-mid);
+		border-right: 1px solid var(--window-light);
+		border-bottom: 1px solid var(--window-light);
+		line-height: 1.55;
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
+
+	@media (max-width: 760px) {
+		.win98-page { padding: 16px 12px 28px; }
+		.window-body { padding: 16px 14px 22px; }
+	}
+</style>
+
+<style is:global>
+	.prose {
+		color: #111111;
+		font-family: "MS Sans Serif", Tahoma, Geneva, sans-serif;
+		font-size: 14px;
+		line-height: 1.6;
+	}
+
+	.prose > * + * { margin-top: 0.9em; }
+	.prose p { margin: 0; }
+
+	.prose h1, .prose h2, .prose h3, .prose h4 {
+		margin: 1.4em 0 0.4em;
+		line-height: 1.25;
+		letter-spacing: -0.2px;
+	}
+	.prose h1 { font-size: 30px; }
+	.prose h2 { font-size: 22px; }
+	.prose h3 { font-size: 17px; }
+	.prose h4 { font-size: 15px; }
+
+	.prose a {
+		color: #111111;
+		text-decoration: none;
+		border-bottom: 1px dotted #4b4740;
+	}
+	.prose a:hover,
+	.prose a:focus-visible {
+		color: #1a4a8a;
+		border-bottom-color: #1a4a8a;
+	}
+
+	.prose ul, .prose ol {
+		padding-left: 1.4em;
+		margin: 0;
+	}
+	.prose li + li { margin-top: 0.25em; }
+
+	.prose blockquote {
+		margin: 0;
+		padding: 10px 14px;
+		background: #f1eee7;
+		border-top: 2px solid #343230;
+		border-left: 2px solid #343230;
+		border-right: 2px solid #ffffff;
+		border-bottom: 2px solid #ffffff;
+		color: #4b4740;
+	}
+	.prose blockquote > p { margin: 0; }
+
+	.prose code {
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 13px;
+		padding: 1px 5px;
+		background: #f1eee7;
+		border: 1px solid #9b968c;
+	}
+
+	.prose pre {
+		margin: 0;
+		padding: 14px 16px;
+		background: #000;
+		color: #f4efe6;
+		border-top: 2px solid #343230;
+		border-left: 2px solid #343230;
+		border-right: 2px solid #ffffff;
+		border-bottom: 2px solid #ffffff;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 13px;
+		line-height: 1.55;
+		overflow-x: auto;
+	}
+	.prose pre code {
+		background: transparent;
+		border: 0;
+		padding: 0;
+		font-size: inherit;
+		color: inherit;
+	}
+
+	.prose hr {
+		border: 0;
+		border-top: 1px solid #9b968c;
+		border-bottom: 1px solid #ffffff;
+		margin: 1.6em 0;
+	}
+
+	.prose img {
+		max-width: 100%;
+		height: auto;
+		padding: 4px;
+		background: #f1eee7;
+		border-top: 2px solid #343230;
+		border-left: 2px solid #343230;
+		border-right: 2px solid #ffffff;
+		border-bottom: 2px solid #ffffff;
+	}
+
+	.prose table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 13px;
+	}
+	.prose th, .prose td {
+		padding: 6px 10px;
+		border: 1px solid #9b968c;
+		text-align: left;
+	}
+	.prose th { background: #dad5c8; }
+</style>

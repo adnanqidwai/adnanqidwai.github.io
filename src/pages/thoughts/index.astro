@@ -1,0 +1,120 @@
+---
+import { getCollection } from "astro:content";
+import WindowPage from "../../layouts/WindowPage.astro";
+
+const posts = (await getCollection("writings", ({ data }) => !data.draft)).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const dateFmt = new Intl.DateTimeFormat("en-US", {
+	year: "numeric",
+	month: "short",
+	day: "2-digit",
+});
+
+const base = import.meta.env.BASE_URL;
+const thoughtsBase = `${base.replace(/\/$/, "")}/thoughts/`;
+---
+
+<WindowPage
+	title="Thoughts — Adnan Qidwai"
+	windowTitle="Thoughts"
+	description="Notes and essays by Adnan Qidwai."
+>
+	<p class="caption">u/adnanqidwai/thoughts.idx</p>
+
+	{posts.length === 0 ? (
+		<p>No posts yet. Check back soon.</p>
+	) : (
+		<ul class="post-list">
+			{posts.map((post) => (
+				<li class="post-item">
+					<a href={`${thoughtsBase}${post.slug}/`} class="post-link">
+						<div class="post-meta">
+							<time datetime={post.data.pubDate.toISOString()}>
+								{dateFmt.format(post.data.pubDate)}
+							</time>
+							{post.data.tags.length > 0 && (
+								<span class="tags">
+									{post.data.tags.map((t) => (
+										<span class="tag">#{t}</span>
+									))}
+								</span>
+							)}
+						</div>
+						<h2 class="post-title">{post.data.title}</h2>
+						{post.data.description && (
+							<p class="post-desc">{post.data.description}</p>
+						)}
+					</a>
+				</li>
+			))}
+		</ul>
+	)}
+</WindowPage>
+
+<style>
+	.caption {
+		margin: 0 0 18px;
+		color: #4b4740;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 12px;
+		font-weight: 700;
+	}
+
+	.post-list {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: grid;
+		gap: 12px;
+	}
+
+	.post-item { margin: 0; }
+
+	.post-link {
+		display: block;
+		padding: 12px 14px;
+		text-decoration: none;
+		color: #111111;
+		background: #f1eee7;
+		border-top: 2px solid #343230;
+		border-left: 2px solid #343230;
+		border-right: 2px solid #ffffff;
+		border-bottom: 2px solid #ffffff;
+	}
+
+	.post-link:hover,
+	.post-link:focus-visible {
+		background: #ffffff;
+		outline: 1px dotted #111111;
+		outline-offset: -4px;
+	}
+
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 8px;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 11px;
+		color: #4b4740;
+		font-weight: 700;
+		letter-spacing: 0.3px;
+		text-transform: uppercase;
+	}
+
+	.tags { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+	.tag { color: #1a4a8a; }
+
+	.post-title {
+		margin: 4px 0 4px;
+		font-size: 17px;
+		line-height: 1.3;
+	}
+
+	.post-desc {
+		margin: 0;
+		color: #4b4740;
+	}
+</style>
