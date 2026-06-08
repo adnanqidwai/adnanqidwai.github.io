@@ -1,0 +1,165 @@
+---
+import WindowPage from "../../layouts/WindowPage.astro";
+import { githubProjectGroups, githubProjects } from "../../data/githubProjects";
+
+const siteUrl = "https://adnanqidwai.github.io";
+const canonicalPath = "/projects/";
+const canonicalUrl = `${siteUrl}${canonicalPath}`;
+const pageDescription =
+	"A compact index of selected GitHub projects by Adnan Qidwai, including agent environments, retrieval experiments, compiler work, NLP, classical ML, and data-mining notebooks.";
+
+const projectsByGroup = githubProjectGroups
+	.map((group) => ({
+		...group,
+		projects: githubProjects.filter((project) => project.group === group.id),
+	}))
+	.filter((group) => group.projects.length > 0);
+
+const collectionJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "CollectionPage",
+	"@id": `${canonicalUrl}#projects`,
+	url: canonicalUrl,
+	name: "projects",
+	description: pageDescription,
+	mainEntity: {
+		"@type": "ItemList",
+		itemListElement: githubProjects.map((project, index) => ({
+			"@type": "ListItem",
+			position: index + 1,
+			url: project.href,
+			name: project.title,
+			description: project.description,
+		})),
+	},
+};
+---
+
+<WindowPage
+	title="projects | Adnan Qidwai"
+	windowTitle="projects"
+	description={pageDescription}
+	backHref={import.meta.env.BASE_URL}
+	backLabel="Back to desktop"
+	type="article"
+	canonicalPath={canonicalPath}
+	structuredData={collectionJsonLd}
+>
+	<header class="projects-header">
+		<p class="caption">u/adnanqidwai/projects.md</p>
+		<h1>projects</h1>
+		<p class="project-note">A few projects I have worked on, grouped roughly by area.</p>
+	</header>
+
+	<div class="project-index" aria-label="Selected GitHub projects">
+		{projectsByGroup.map((group) => (
+			<section class="project-group" aria-labelledby={`project-group-${group.id}`}>
+				<h2 id={`project-group-${group.id}`}>{group.title}</h2>
+				<ul class="project-list">
+					{group.projects.map((project) => (
+						<li class="project-row">
+							<a href={project.href} target="_blank" rel="noopener noreferrer">
+								<span class="project-name">{project.title}</span>
+							</a>
+							<p>{project.description}</p>
+						</li>
+					))}
+				</ul>
+			</section>
+		))}
+	</div>
+</WindowPage>
+
+<style>
+	.projects-header {
+		margin-bottom: 22px;
+	}
+
+	.caption {
+		margin: 0 0 6px;
+		color: #4b4740;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 12px;
+		font-weight: 700;
+	}
+
+	.projects-header h1 {
+		margin: 0 0 10px;
+		font-size: 32px;
+		line-height: 1.15;
+	}
+
+	.project-note {
+		max-width: 54ch;
+		margin: 0;
+		color: #3a352f;
+		font-size: 14px;
+		line-height: 1.5;
+	}
+
+	.project-index {
+		display: grid;
+		gap: 22px;
+	}
+
+	.project-group h2 {
+		margin: 0 0 10px;
+		padding-bottom: 5px;
+		border-bottom: 1px solid #9b968c;
+		box-shadow: 0 1px 0 #ffffff;
+		font-size: 18px;
+		line-height: 1.25;
+	}
+
+	.project-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.project-row {
+		display: grid;
+		grid-template-columns: minmax(190px, 0.42fr) minmax(0, 1fr);
+		gap: 14px;
+		padding: 10px 0;
+		border-bottom: 1px dotted #9b968c;
+	}
+
+	.project-row:last-child {
+		border-bottom: 0;
+	}
+
+	.project-row a {
+		align-self: start;
+		display: inline-flex;
+		align-items: baseline;
+		gap: 6px;
+		color: #111111;
+		font-weight: 700;
+		text-decoration: none;
+		min-width: 0;
+	}
+
+	.project-row a:hover,
+	.project-row a:focus-visible {
+		color: #1a4a8a;
+	}
+
+	.project-name {
+		overflow-wrap: anywhere;
+	}
+
+	.project-row p {
+		margin: 0;
+		color: #27231f;
+		line-height: 1.45;
+	}
+
+	@media (max-width: 700px) {
+		.project-row {
+			grid-template-columns: 1fr;
+			gap: 4px;
+			padding: 12px 0;
+		}
+	}
+</style>

@@ -8,6 +8,13 @@ interface Props {
 	description?: string;
 	backHref?: string;
 	backLabel?: string;
+	image?: string;
+	type?: "website" | "article" | "profile";
+	canonicalPath?: string;
+	noindex?: boolean;
+	publishedTime?: string;
+	modifiedTime?: string;
+	structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -16,10 +23,27 @@ const {
 	description,
 	backHref = import.meta.env.BASE_URL,
 	backLabel = "← Back to desktop",
+	image,
+	type,
+	canonicalPath,
+	noindex,
+	publishedTime,
+	modifiedTime,
+	structuredData,
 } = Astro.props;
 ---
 
-<Layout title={title} description={description}>
+<Layout
+	title={title}
+	description={description}
+	image={image}
+	type={type}
+	canonicalPath={canonicalPath}
+	noindex={noindex}
+	publishedTime={publishedTime}
+	modifiedTime={modifiedTime}
+	structuredData={structuredData}
+>
 	<div class="win98-page">
 		<div class="page-shell">
 			<nav class="page-nav" aria-label="Breadcrumb">
@@ -252,6 +276,12 @@ const {
 		padding: 0;
 		font-size: inherit;
 		color: inherit;
+	}
+
+	.prose .katex-display {
+		overflow-x: auto;
+		overflow-y: hidden;
+		padding: 0.25em 0;
 	}
 
 	.prose hr {

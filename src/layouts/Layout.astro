@@ -1,11 +1,38 @@
 ---
+import "katex/dist/katex.min.css";
+
 interface Props {
 	title: string;
 	description?: string;
 	showNav?: boolean;
+	image?: string;
+	type?: "website" | "article" | "profile";
+	canonicalPath?: string;
+	noindex?: boolean;
+	publishedTime?: string;
+	modifiedTime?: string;
+	structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description = "Personal website and portfolio" } = Astro.props;
+const {
+	title,
+	description = "Adnan Qidwai's personal website, research profile, publications, and notes on AI systems.",
+	image = "/about_me/me.jpeg",
+	type = "website",
+	canonicalPath,
+	noindex = false,
+	publishedTime,
+	modifiedTime,
+	structuredData = [],
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://adnanqidwai.github.io");
+const canonicalUrl = new URL(canonicalPath ?? Astro.url.pathname, site).toString();
+const imageUrl = new URL(image, site).toString();
+const robotsContent = noindex
+	? "noindex, nofollow"
+	: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
+const jsonLd = Array.isArray(structuredData) ? structuredData : [structuredData];
 ---
 
 <!doctype html>
@@ -13,11 +40,33 @@ const { title, description = "Personal website and portfolio" } = Astro.props;
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
+		<meta name="robots" content={robotsContent} />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#111111" />
+		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+		<meta property="og:site_name" content="Adnan Qidwai" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content={type} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={imageUrl} />
+		<meta property="og:image:alt" content="Adnan Qidwai" />
+		{publishedTime && <meta property="article:published_time" content={publishedTime} />}
+		{modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imageUrl} />
+		<meta name="twitter:creator" content="@adnanqidw_ai" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		{jsonLd.map((data) => (
+			<script type="application/ld+json" set:html={JSON.stringify(data)}></script>
+		))}
 	</head>
 	<body>
 		<main>
@@ -40,5 +89,16 @@ const { title, description = "Personal website and portfolio" } = Astro.props;
 	}
 	a {
 		color: inherit;
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
 </style>

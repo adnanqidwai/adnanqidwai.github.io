@@ -1,0 +1,148 @@
+---
+import WindowPage from "../../layouts/WindowPage.astro";
+import { projectPages } from "../../data/projects";
+
+export async function getStaticPaths() {
+	return projectPages.map((project) => ({
+		params: { slug: project.slug },
+		props: { project },
+	}));
+}
+
+const { project } = Astro.props;
+const siteUrl = "https://adnanqidwai.github.io";
+const canonicalPath = `/projects/${project.slug}/`;
+const canonicalUrl = `${siteUrl}${canonicalPath}`;
+
+const projectJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "CreativeWork",
+	"@id": `${canonicalUrl}#project`,
+	url: canonicalUrl,
+	name: project.title,
+	description: project.description,
+	keywords: project.keywords.join(", "),
+	author: {
+		"@type": "Person",
+		name: "Adnan Qidwai",
+		url: siteUrl,
+	},
+};
+---
+
+<WindowPage
+	title={`${project.title} | Adnan Qidwai`}
+	windowTitle={project.windowTitle}
+	description={project.description}
+	backHref="/projects/"
+	backLabel="Back to projects"
+	type="article"
+	canonicalPath={canonicalPath}
+	structuredData={projectJsonLd}
+>
+	<article class="project-detail">
+		<header class="project-header">
+			<p class="caption">{project.caption}</p>
+			<h1>{project.title}</h1>
+			<p class="summary">{project.summary}</p>
+		</header>
+
+		<div class="project-sections">
+			{project.sections.map((section) => (
+				<section class="detail-section">
+					<h2>{section.title}</h2>
+					<ul>
+						{section.items.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+			))}
+		</div>
+
+		<ul class="keyword-list" aria-label="Project keywords">
+			{project.keywords.map((keyword) => (
+				<li>{keyword}</li>
+			))}
+		</ul>
+	</article>
+</WindowPage>
+
+<style>
+	.project-detail {
+		display: grid;
+		gap: 22px;
+	}
+
+	.caption {
+		margin: 0 0 6px;
+		color: #4b4740;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 12px;
+		font-weight: 700;
+	}
+
+	.project-header h1 {
+		margin: 0 0 10px;
+		font-size: 32px;
+		line-height: 1.15;
+	}
+
+	.summary {
+		max-width: 78ch;
+		margin: 0;
+		color: #27231f;
+		font-size: 15px;
+		line-height: 1.55;
+	}
+
+	.project-sections {
+		display: grid;
+		gap: 20px;
+	}
+
+	.detail-section h2 {
+		margin: 0 0 10px;
+		padding-bottom: 5px;
+		border-bottom: 1px solid #9b968c;
+		box-shadow: 0 1px 0 #ffffff;
+		font-size: 18px;
+		line-height: 1.25;
+	}
+
+	.detail-section ul {
+		margin: 0;
+		padding-left: 20px;
+	}
+
+	.detail-section li {
+		margin: 0 0 8px;
+		color: #27231f;
+		line-height: 1.45;
+	}
+
+	.detail-section li:last-child {
+		margin-bottom: 0;
+	}
+
+	.keyword-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.keyword-list li {
+		border-top: 1px solid #ffffff;
+		border-left: 1px solid #ffffff;
+		border-right: 1px solid #77736a;
+		border-bottom: 1px solid #77736a;
+		background: #d8d3c8;
+		padding: 3px 7px;
+		color: #27231f;
+		font-family: "Courier New", ui-monospace, monospace;
+		font-size: 12px;
+	}
+</style>

@@ -16,10 +16,16 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
+*.aux
+*.out
+*.fdb_latexmk
+*.fls
+*.synctex.gz
 
 # Tool caches
 .bolt/
 .superpowers/
+.pytest_cache/
 .cache/
 .vite/
 .turbo/
@@ -34,5 +40,9 @@ Thumbs.db
 .idea/
 
 # Local scratch files
+unrelated/
 blog_details.md
 tests/
+projects/
+!src/pages/projects/
+!src/pages/projects/**

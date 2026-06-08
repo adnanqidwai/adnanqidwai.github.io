@@ -14,14 +14,32 @@ const dateFmt = new Intl.DateTimeFormat("en-US", {
 
 const base = import.meta.env.BASE_URL;
 const thoughtsBase = `${base.replace(/\/$/, "")}/thoughts/`;
+const siteUrl = "https://adnanqidwai.github.io";
+const description = "Notes by Adnan Qidwai on AI agents, evaluation, optimization, prompting, and research systems.";
+const blogJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "Blog",
+	"@id": `${siteUrl}/thoughts/#blog`,
+	url: `${siteUrl}/thoughts/`,
+	name: "Thoughts by Adnan Qidwai",
+	description,
+	author: {
+		"@type": "Person",
+		"@id": `${siteUrl}/#person`,
+		name: "Adnan Qidwai",
+		url: siteUrl,
+	},
+};
 ---
 
 <WindowPage
-	title="Thoughts — Adnan Qidwai"
+	title="Thoughts | Adnan Qidwai"
 	windowTitle="Thoughts"
-	description="Notes and essays by Adnan Qidwai."
+	description={description}
+	structuredData={blogJsonLd}
 >
 	<p class="caption">u/adnanqidwai/thoughts.idx</p>
+	<h1 class="sr-only">Thoughts by Adnan Qidwai</h1>
 
 	{posts.length === 0 ? (
 		<p>No posts yet. Check back soon.</p>

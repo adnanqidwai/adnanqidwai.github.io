@@ -22,14 +22,45 @@ const dateFmt = new Intl.DateTimeFormat("en-US", {
 
 const base = import.meta.env.BASE_URL;
 const thoughtsHref = `${base.replace(/\/$/, "")}/thoughts/`;
+const siteUrl = "https://adnanqidwai.github.io";
+const canonicalUrl = `${siteUrl}/thoughts/${post.slug}/`;
+const publishedTime = post.data.pubDate.toISOString();
+const modifiedTime = (post.data.updatedDate ?? post.data.pubDate).toISOString();
+const articleJsonLd = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	"@id": `${canonicalUrl}#article`,
+	url: canonicalUrl,
+	headline: post.data.title,
+	description: post.data.description,
+	datePublished: publishedTime,
+	dateModified: modifiedTime,
+	keywords: post.data.tags,
+	author: {
+		"@type": "Person",
+		"@id": `${siteUrl}/#person`,
+		name: "Adnan Qidwai",
+		url: siteUrl,
+	},
+	publisher: {
+		"@type": "Person",
+		"@id": `${siteUrl}/#person`,
+		name: "Adnan Qidwai",
+	},
+	mainEntityOfPage: canonicalUrl,
+};
 ---
 
 <WindowPage
-	title={`${post.data.title} — Adnan Qidwai`}
+	title={`${post.data.title} | Adnan Qidwai`}
 	windowTitle={post.data.title}
 	description={post.data.description}
 	backHref={thoughtsHref}
 	backLabel="← Back to thoughts"
+	type="article"
+	publishedTime={publishedTime}
+	modifiedTime={modifiedTime}
+	structuredData={articleJsonLd}
 >
 	<header class="post-header">
 		<p class="caption">u/adnanqidwai/thoughts/{post.slug}.md</p>
