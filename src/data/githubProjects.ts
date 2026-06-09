@@ -94,7 +94,7 @@ export const githubProjects: GithubProject[] = [
 		href: "https://github.com/adnanqidwai/LearningNLP",
 		group: "nlp",
 		description:
-			"NLP exercises covering word vectors, neural classifiers, and sequence models.",
+			"Assignments from Stanford 224n covering word vectors, neural classifiers, and sequence models.",
 	},
 	{
 		title: "K-Means from Scratch",
