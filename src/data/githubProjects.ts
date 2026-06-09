@@ -66,7 +66,7 @@ export const githubProjects: GithubProject[] = [
 		href: "https://github.com/adnanqidwai/RAG-TTS-Agent",
 		group: "systems",
 		description:
-			"Voice-enabled tutoring prototype that combines retrieval, agent routing, and text-to-speech around a harmony tutor workflow.",
+			"Voice-enabled learning tool that combines retrieval, agent routing, and text-to-speech for learning about music.",
 	},
 	{
 		title: "Nanopass Compiler for Racket",
@@ -80,56 +80,56 @@ export const githubProjects: GithubProject[] = [
 		href: "https://github.com/adnanqidwai/T-spanner_of_graphs__parallelized",
 		group: "compilers",
 		description:
-			"C++ graph-algorithms project for constructing sparse t-spanners, including parallelized implementation work for comparing construction behavior and runtime.",
+			"C++ graph-algorithms project for constructing sparse t-spanners and comparing sequential versus parallel construction behavior.",
 	},
 	{
 		title: "Neural POS Taggers",
 		href: "https://github.com/adnanqidwai/POS-Taggers",
 		group: "nlp",
 		description:
-			"Part-of-speech tagging implementations with feed-forward and recurrent neural models for sequence-labeling experiments.",
+			"Part-of-speech taggers built with feed-forward and recurrent neural models for sequence-labeling experiments.",
 	},
 	{
 		title: "NLP Course Exercises",
 		href: "https://github.com/adnanqidwai/LearningNLP",
 		group: "nlp",
 		description:
-			"NLP learning repository with CS224n-style assignments and exercises around word vectors, neural classifiers, and sequence models.",
+			"NLP exercises covering word vectors, neural classifiers, and sequence models.",
 	},
 	{
 		title: "K-Means from Scratch",
 		href: "https://github.com/adnanqidwai/KMeans_implementation",
 		group: "classicalMl",
 		description:
-			"Notebook implementation of K-means clustering from scratch on a football dataset, focused on the algorithm rather than a library wrapper.",
+			"K-means clustering from scratch on a football dataset, including centroid updates and cluster assignments.",
 	},
 	{
 		title: "Multiclass SVMs",
 		href: "https://github.com/adnanqidwai/multiclassSVMs",
 		group: "classicalMl",
 		description:
-			"Multiclass SVM implementation comparing one-vs-rest and one-vs-one classification strategies.",
+			"Multiclass SVMs comparing one-vs-rest and one-vs-one classification strategies.",
 	},
 	{
 		title: "Random Forest from Scratch",
 		href: "https://github.com/adnanqidwai/RandomForestClassifier_implementation",
 		group: "classicalMl",
 		description:
-			"Notebook implementation of a random forest classifier over penguin data, covering bootstrapping, feature splits, and tree-vote aggregation.",
+			"Random forest classifier from scratch over penguin data, covering bootstrapping, feature splits, and tree-vote aggregation.",
 	},
 	{
 		title: "Clustering Algorithm Comparison",
 		href: "https://github.com/adnanqidwai/Comparing_Clustering_Algos",
 		group: "classicalMl",
 		description:
-			"Notebook comparison of clustering algorithms across compact, skewed, subclustered, and well-separated datasets.",
+			"Comparison of clustering algorithms across compact, skewed, subclustered, and well-separated datasets.",
 	},
 	{
 		title: "Paged Data-Cube Construction",
 		href: "https://github.com/adnanqidwai/Data_cube_construction-using-paging",
 		group: "dataMining",
 		description:
-			"Data-mining notebook for building data cubes with paging/merging and attribute-oriented induction.",
+			"Paged data-cube construction with merging and attribute-oriented induction.",
 	},
 	{
 		title: "FP-Growth Movie Recommender",
@@ -143,13 +143,13 @@ export const githubProjects: GithubProject[] = [
 		href: "https://github.com/adnanqidwai/Data-Analytics-on-Makaan.com-Data",
 		group: "dataMining",
 		description:
-			"Exploratory analytics over scraped Makaan.com housing data, focused on cleaning, summary statistics, and basic market patterns.",
+			"Housing-data analysis over scraped Makaan.com listings, covering cleaning, summary statistics, and basic market patterns.",
 	},
 	{
 		title: "Eggshell",
 		href: "https://github.com/adnanqidwai/eggshell",
 		group: "compilers",
 		description:
-			"Small Unix-style shell implementation focused on command execution and systems-programming basics.",
+			"Unix-style shell implementation with command execution and systems-programming primitives.",
 	},
 ];
